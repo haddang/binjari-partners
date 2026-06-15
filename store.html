@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>매장 정보 수정 - 빈자리 파트너즈</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" href="favicon.ico?v=1" type="image/x-icon">
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- 사이드바 -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <img src="logo.png" alt="BINJARI Partners Logo" class="logo-image">
+            </div>
+            <ul class="nav-links">
+                <li><a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> 대시보드</a></li>
+                <li><a href="seats.html"><i class="fa-solid fa-chair"></i> 좌석 관리</a></li>
+                <li><a href="reservations.html"><i class="fa-solid fa-calendar-check"></i> 예약 내역</a></li>
+                <li class="active"><a href="store.html"><i class="fa-solid fa-store"></i> 매장 프로필 관리</a></li>
+                <li><a href="settings.html"><i class="fa-solid fa-gears"></i> 운영 정책 설정</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <div class="user-profile-card">
+                    <div class="profile-avatar">박</div>
+                    <div class="profile-info">
+                        <p class="user-name">박성훈 사장님</p>
+                        <span class="user-tier tier-pro"><i class="fa-solid fa-crown"></i> PRO</span>
+                    </div>
+                    <a href="index.html" class="logout-btn" title="로그아웃">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 메인 콘텐츠 -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="예약자 이름 또는 전화번호 검색">
+                </div>
+                <div class="top-actions">
+                    <button id="addReservationBtn" class="btn btn-primary"><i class="fa-solid fa-plus"></i> 현장 예약
+                        추가</button>
+                    <div id="statusBadge" class="status-badge online">운영 중</div>
+                </div>
+            </header>
+
+            <div class="section-title">
+                <h2>매장 프로필 관리</h2>
+                <p>앱에서 고객이 확인하는 매장 프로필과 홍보 콘텐츠를 커스텀합니다.</p>
+            </div>
+
+            <div class="preview-label" style="max-width: 850px; display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--gray-3); margin-bottom: 12px; margin-top: 10px;">
+                <i class="fa-regular fa-eye" style="color: var(--accent);"></i> 모바일 앱 노출 미리보기
+            </div>
+            <!-- 앱 프로필 미리보기 카드 -->
+            <section class="profile-preview-card">
+                <div class="profile-thumb"><i class="fa-solid fa-mug-hot"></i></div>
+                <div class="profile-summary">
+                    <h3>빈자리 카페 홍대점</h3>
+                    <p class="promo-text">"스마트 좌석 관제와 전석 개별 콘센트로 업무와 작업에 최적화된 공간입니다."</p>
+                    <div class="profile-tags">
+                        <span class="profile-tag">실시간 좌석 조회</span>
+                        <span class="profile-tag">전석 개별 콘센트</span>
+                        <span class="profile-tag">집중형 1인석</span>
+                        <span class="profile-tag">24H 오픈</span>
+                    </div>
+                </div>
+                <!-- Interactive Mobile Preview Button -->
+                <button type="button" class="btn btn-secondary" id="openMobilePreviewBtn" style="margin-left: auto; display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13.5px; height: 42px; border-radius: 8px;">
+                    <i class="fa-solid fa-mobile-screen-button" style="color: var(--accent); font-size: 15px;"></i> 앱 화면 보기
+                </button>
+            </section>
+
+            <section class="content-card" style="max-width: 850px;">
+                <form onsubmit="event.preventDefault(); alert('매장 프로필 변경사항이 성공적으로 저장되었습니다.');">
+                    <!-- 섹션 1: 기본 정보 및 홍보 문구 -->
+                    <h3 style="font-size:18px; font-weight:700; margin-bottom:20px; color:#1e293b;">1. 기본 정보 및 홍보 문구
+                    </h3>
+
+                    <div class="form-group">
+                        <label class="form-label" for="storeName">매장명</label>
+                        <input type="text" id="storeName" class="form-input" value="빈자리 카페 홍대점">
+                    </div>
+
+                    <div class="form-group" style="display: flex; gap: 20px;">
+                        <div style="flex: 1;">
+                            <label class="form-label" for="storeAddress">매장 주소</label>
+                            <input type="text" id="storeAddress" class="form-input" value="서울시 마포구 홍익로 123, 2층">
+                        </div>
+                        <div style="flex: 1;">
+                            <label class="form-label" for="storePhone">연락처</label>
+                            <input type="text" id="storePhone" class="form-input" value="02-1234-5678">
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="display: flex; gap: 20px;">
+                        <div style="flex: 1;">
+                            <label class="form-label" for="openTime">오픈 시간</label>
+                            <input type="time" id="openTime" class="form-input" value="09:00">
+                        </div>
+                        <div style="flex: 1;">
+                            <label class="form-label" for="closeTime">마감 시간</label>
+                            <input type="time" id="closeTime" class="form-input" value="23:00">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="promoText">한줄 홍보 문구</label>
+                        <input type="text" id="promoText" class="form-input" value="스마트 좌석 관제와 전석 개별 콘센트로 업무와 작업에 최적화된 공간입니다."
+                            placeholder="고객을 사로잡을 매력적인 한줄 소개를 적어주세요">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="tagsInput">매장 핵심 해시태그 (콤마로 구분)</label>
+                        <input type="text" id="tagsInput" class="form-input" value="#실시간좌석조회, #전석개별콘센트, #집중형1인석, #24H오픈"
+                            placeholder="#태그1, #태그2">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="storeDesc">상세 매장 소개</label>
+                        <textarea id="storeDesc" class="form-textarea" placeholder="매장의 디테일한 장점과 이용 안내를 적어주세요.">스마트 좌석 관제 시스템을 도입하여 불필요한 대기 동선을 최소화하고 쾌적한 작업 몰입 환경을 구축했습니다.
+전 좌석 독립형 콘센트와 초고속 5G 와이파이를 완비하고 있으며, 파트너 대시보드 연동을 통해 무단 좌석 점유를 효율적으로 제어하여 언제 방문하셔도 편리하게 이용하실 수 있습니다.</textarea>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- 섹션 2: 매장 사진 갤러리 -->
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                        <h3 style="font-size:18px; font-weight:700; color:#1e293b;">2. 매장 사진 갤러리 커스텀</h3>
+                        <span style="font-size:13px; color:#64748b;">최대 10장 업로드 가능</span>
+                    </div>
+                    <p style="font-size:13px; color:#64748b; margin-bottom:15px;">매장의 분위기, 좌석 형태, 외관 사진을 등록하여 고객에게 매장을
+                        어필하세요.</p>
+
+                    <div class="photo-upload-grid">
+                        <div class="photo-box">
+                            <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=400&auto=format&fit=crop&q=60"
+                                alt="매장 전경">
+                            <div class="photo-overlay"><button type="button" class="btn-overlay"><i
+                                        class="fa-solid fa-trash"></i></button></div>
+                        </div>
+                        <div class="photo-box">
+                            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&auto=format&fit=crop&q=60"
+                                alt="1인 집중석">
+                            <div class="photo-overlay"><button type="button" class="btn-overlay"><i
+                                        class="fa-solid fa-trash"></i></button></div>
+                        </div>
+                        <div class="photo-box">
+                            <img src="https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?w=400&auto=format&fit=crop&q=60"
+                                alt="단체석">
+                            <div class="photo-overlay"><button type="button" class="btn-overlay"><i
+                                        class="fa-solid fa-trash"></i></button></div>
+                        </div>
+                        <div class="photo-box">
+                            <img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=400&auto=format&fit=crop&q=60"
+                                alt="창가석">
+                            <div class="photo-overlay"><button type="button" class="btn-overlay"><i
+                                        class="fa-solid fa-trash"></i></button></div>
+                        </div>
+                        <div class="photo-upload-btn">
+                            <i class="fa-solid fa-image"></i>
+                            <span>사진 추가</span>
+                        </div>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- 섹션 3: 메뉴 및 서비스 소개 -->
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                        <h3 style="font-size:18px; font-weight:700; color:#1e293b;">3. 메뉴 및 서비스 소개 커스텀</h3>
+                        <button type="button" class="btn btn-secondary" style="padding:6px 14px; font-size:13px;"><i
+                                class="fa-solid fa-plus"></i> 새 메뉴 등록</button>
+                    </div>
+                    <p style="font-size:13px; color:#64748b; margin-bottom:15px;">매장의 대표 음료나 베이커리, 카공인을 위한 스페셜 세트 등을
+                        등록하세요.</p>
+
+                    <div class="menu-list">
+                        <div class="menu-card">
+                            <div class="menu-thumb"><img
+                                    src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=200&auto=format&fit=crop&q=60"
+                                    alt="아메리카노"></div>
+                            <div class="menu-info">
+                                <h4>아메리카노 (Ice / Hot) <span class="badge badge-success"
+                                        style="font-size:11px;">대표</span></h4>
+                                <div class="menu-price">4,500원</div>
+                                <p class="menu-desc">스페셜티 원두를 사용하여 고소하고 묵직한 바디감을 자랑하는 아메리카노</p>
+                            </div>
+                            <div class="menu-actions">
+                                <button type="button" class="btn-icon"><i class="fa-solid fa-pen"></i></button>
+                                <button type="button" class="btn-icon delete"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="menu-card">
+                            <div class="menu-thumb"><img
+                                    src="https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=200&auto=format&fit=crop&q=60"
+                                    alt="카페라떼"></div>
+                            <div class="menu-info">
+                                <h4>클래식 카페라떼</h4>
+                                <div class="menu-price">5,000원</div>
+                                <p class="menu-desc">신선한 1등급 우유와 진한 에스프레소가 어우러진 부드러운 라떼</p>
+                            </div>
+                            <div class="menu-actions">
+                                <button type="button" class="btn-icon"><i class="fa-solid fa-pen"></i></button>
+                                <button type="button" class="btn-icon delete"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="menu-card">
+                            <div class="menu-thumb"><img
+                                    src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=200&auto=format&fit=crop&q=60"
+                                    alt="베이커리 세트"></div>
+                            <div class="menu-info">
+                                <h4>카공 집중 스페셜 세트 <span class="badge badge-warning" style="font-size:11px;">인기</span>
+                                </h4>
+                                <div class="menu-price">8,500원</div>
+                                <p class="menu-desc">아메리카노 1잔 + 크로플 또는 조각 케이크 선택 (장시간 이용자 추천)</p>
+                            </div>
+                            <div class="menu-actions">
+                                <button type="button" class="btn-icon"><i class="fa-solid fa-pen"></i></button>
+                                <button type="button" class="btn-icon delete"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- 섹션 4: 편의시설 및 서비스 커스텀 -->
+                    <h3 style="font-size:18px; font-weight:700; margin-bottom:8px; color:#1e293b;">4. 편의시설 및 서비스 커스텀
+                    </h3>
+                    <p style="font-size:13px; color:#64748b; margin-bottom:20px;">고객이 앱에서 매장을 검색하고 필터링할 때 사용되는 핵심
+                        편의시설입니다. 클릭하여 활성화하세요.</p>
+
+                    <div class="facility-grid">
+                        <div class="facility-item active"><i class="fa-solid fa-wifi"></i> <span>초고속 와이파이</span></div>
+                        <div class="facility-item active"><i class="fa-solid fa-plug"></i> <span>전 좌석 콘센트</span></div>
+                        <div class="facility-item active"><i class="fa-solid fa-clock"></i> <span>24시간 운영</span></div>
+                        <div class="facility-item active"><i class="fa-solid fa-square-parking"></i> <span>주차 가능</span>
+                        </div>
+                        <div class="facility-item active"><i class="fa-solid fa-print"></i> <span>프린터 / 복사기</span></div>
+                        <div class="facility-item active"><i class="fa-solid fa-people-group"></i> <span>6인 이상
+                                단체석</span></div>
+                        <div class="facility-item active"><i class="fa-solid fa-volume-low"></i> <span>조용한 분위기</span>
+                        </div>
+                        <div class="facility-item"><i class="fa-solid fa-mug-hot"></i> <span>커피 리필 가능</span></div>
+                        <div class="facility-item"><i class="fa-solid fa-wheelchair"></i> <span>휠체어 접근 가능</span></div>
+                        <div class="facility-item"><i class="fa-solid fa-couch"></i> <span>편안한 소파석</span></div>
+                    </div>
+
+                    <div class="form-actions" style="margin-top:40px;">
+                        <button type="button" class="btn btn-secondary" onclick="location.reload();">취소</button>
+                        <button type="submit" class="btn btn-primary" style="padding:12px 30px; font-size:16px;">프로필
+                            변경사항 저장</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <!-- 현장 예약 추가 오버레이 -->
+    <div id="reservationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <div class="modal-body">
+                <!-- 좌측: QR 코드 섹션 -->
+                <div class="qr-section">
+                    <h3>앱으로 직접 예약하기</h3>
+                    <p>QR코드를 스캔하여 간편하게 예약하세요.</p>
+                    <div class="qr-container">
+                        <i class="fa-solid fa-qrcode"></i>
+                        <p class="qr-hint">앱에서 '빈자리'를 검색하세요</p>
+                    </div>
+                </div>
+
+                <!-- 우측: 정보 입력 섹션 -->
+                <div class="info-section">
+                    <h3>현장 예약 정보 입력</h3>
+                    <div class="form-group">
+                        <label class="form-label">고객 성함</label>
+                        <input type="text" class="form-input" id="custName" placeholder="고객의 성함을 입력하세요">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">연락처</label>
+                        <input type="tel" class="form-input" id="custPhone" placeholder="010-0000-0000">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">이용 좌석</label>
+                        <select class="form-select" id="seatSelect">
+                            <option value="">좌석 선택</option>
+                            <option value="01">01번 좌석</option>
+                            <option value="02">02번 좌석</option>
+                            <option value="03">03번 좌석</option>
+                            <option value="04">04번 좌석 (창가)</option>
+                            <option value="05">05번 좌석 (창가)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">이용 시간</label>
+                        <select class="form-select" id="timeSelect">
+                            <option value="1">1시간</option>
+                            <option value="2">2시간</option>
+                            <option value="3">3시간</option>
+                            <option value="4">4시간</option>
+                            <option value="6">6시간</option>
+                        </select>
+                    </div>
+                    <div class="form-actions" style="border-top: none; margin-top: 10px; padding-top: 0;">
+                        <button id="submitReservation" class="btn btn-primary"
+                            style="width: 100%; height: 50px; font-size: 16px;">예약 생성</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 모바일 앱 노출 미리보기 오버레이 -->
+    <div id="mobilePreviewModal" class="mobile-preview-modal">
+        <div class="phone-frame-wrapper">
+            <!-- Physical Hardware Buttons -->
+            <div class="phone-btn-hard ring-switch"></div>
+            <div class="phone-btn-hard volume-up"></div>
+            <div class="phone-btn-hard volume-down"></div>
+            <div class="phone-btn-hard power-button"></div>
+
+            <div class="phone-container">
+                <!-- Notch -->
+                <div class="phone-notch"></div>
+
+                <!-- Status Bar -->
+                <div class="phone-status-bar">
+                    <span>9:42</span>
+                    <div class="phone-status-icons">
+                        <i class="fa-solid fa-signal"></i>
+                        <i class="fa-solid fa-wifi"></i>
+                        <i class="fa-solid fa-battery-three-quarters"></i>
+                    </div>
+                </div>
+
+                <!-- Scrollable Viewport -->
+                <div class="phone-viewport">
+                    <!-- Header Image -->
+                    <div class="phone-header-img" style="background-image: url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=400&auto=format&fit=crop&q=80');">
+                        <div class="phone-back-arrow"><i class="fa-solid fa-chevron-left"></i></div>
+                    </div>
+
+                    <!-- Store Header Summary Card -->
+                    <div class="phone-store-card">
+                        <div class="cat">마포구 서교동</div>
+                        <h4 id="mobilePreviewStoreName">빈자리 카페 홍대점</h4>
+                        <div class="rating-row">
+                            <i class="fa-solid fa-star"></i>
+                            <span>4.86</span>
+                            <span style="color:#cbd5e1; font-weight:300;">|</span>
+                            <span style="color:var(--accent);">리뷰 120개 ></span>
+                        </div>
+
+                        <div class="info-line">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>서울 마포구 홍익로 123, 2층</span>
+                        </div>
+                        <div class="info-line">
+                            <i class="fa-solid fa-clock"></i>
+                            <span><span class="dot-open"></span>영업 중 (09:00 - 23:00) ∨</span>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="phone-action-row">
+                            <div class="phone-action-btn">
+                                <i class="fa-regular fa-heart"></i>
+                                <span>42</span>
+                            </div>
+                            <div class="phone-action-btn">
+                                <i class="fa-solid fa-share-nodes"></i>
+                                <span>공유</span>
+                            </div>
+                            <div class="phone-action-btn">
+                                <i class="fa-solid fa-arrow-turn-up"></i>
+                                <span>길찾기</span>
+                            </div>
+                            <div class="phone-action-btn">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                                <span>리뷰쓰기</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabs -->
+                    <div class="phone-tab-bar">
+                        <div class="phone-tab active">사진</div>
+                        <div class="phone-tab">리뷰</div>
+                        <div class="phone-tab">편의시설</div>
+                        <div class="phone-tab">매장정보</div>
+                    </div>
+
+                    <!-- Photos Section -->
+                    <div class="phone-section">
+                        <h5>사진 <span>더보기 ></span></h5>
+                        <div class="phone-photo-grid">
+                            <div style="background-image: url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=200&auto=format&fit=crop&q=80');"></div>
+                            <div style="background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=200&auto=format&fit=crop&q=80');"></div>
+                            <div style="background-image: url('https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?w=200&auto=format&fit=crop&q=80');"></div>
+                            <div style="background-image: url('https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=200&auto=format&fit=crop&q=80');"></div>
+                            <div style="background-image: url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=200&auto=format&fit=crop&q=80');"></div>
+                            <div class="more-photos" style="background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=200&auto=format&fit=crop&q=80');">
+                                <span>+12</span>
+                                <span>더보기</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reviews Section -->
+                    <div class="phone-section">
+                        <h5>최근 후기 <span>전체보기 ></span></h5>
+                        <div class="phone-review-list">
+                            <div class="phone-review-item">
+                                <div class="phone-review-user">
+                                    <div class="phone-review-avatar">M</div>
+                                    <div class="phone-review-user-info">
+                                        <span class="phone-review-name">민석</span>
+                                        <span class="phone-review-date">어제 | 첫번째 방문</span>
+                                    </div>
+                                </div>
+                                <p class="phone-review-desc">좌석 간격이 넓고 조용해서 집중하기 아주 좋습니다. 앱으로 공석 상태를 바로 조회가 가능해서 헛걸음할 필요도 없네요.</p>
+                            </div>
+                            <div class="phone-review-item">
+                                <div class="phone-review-user">
+                                    <div class="phone-review-avatar" style="background:#e0f2fe; color:#0284c7;">J</div>
+                                    <div class="phone-review-user-info">
+                                        <span class="phone-review-name">지은</span>
+                                        <span class="phone-review-date">3일 전 | 세번째 방문</span>
+                                    </div>
+                                </div>
+                                <p class="phone-review-desc">전 석 개별 콘센트가 구비되어 있고 와이파이도 빠릅니다. 스마트 전력 제어 시스템이 연동되어서 쾌적합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Convenience Facilities -->
+                    <div class="phone-section">
+                        <h5>편의시설</h5>
+                        <div class="phone-fac-grid">
+                            <div class="phone-fac-item">
+                                <div class="phone-fac-icon"><i class="fa-solid fa-wifi"></i></div>
+                                <span>와이파이</span>
+                            </div>
+                            <div class="phone-fac-item">
+                                <div class="phone-fac-icon"><i class="fa-solid fa-plug"></i></div>
+                                <span>개별콘센트</span>
+                            </div>
+                            <div class="phone-fac-item">
+                                <div class="phone-fac-icon"><i class="fa-solid fa-volume-low"></i></div>
+                                <span>조용한구역</span>
+                            </div>
+                            <div class="phone-fac-item">
+                                <div class="phone-fac-icon"><i class="fa-solid fa-square-parking"></i></div>
+                                <span>주차제공</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Store Info -->
+                    <div class="phone-section">
+                        <h5>매장정보</h5>
+                        <div style="font-size:12px; font-weight:700; color:#475569; margin-bottom:6px;">소개글</div>
+                        <p id="mobilePreviewPromoText" style="font-size:13px; font-weight:700; color:#0f172a; line-height:1.5; word-break:keep-all;"></p>
+                        <p id="mobilePreviewDesc" style="font-size:12px; color:#64748b; line-height:1.6; margin-top:8px; word-break:keep-all; white-space:pre-wrap;"></p>
+                    </div>
+
+                    <!-- Location Map Mock -->
+                    <div class="phone-section" style="margin-bottom: 0;">
+                        <h5>위치</h5>
+                        <div class="phone-map-box">
+                            <i class="fa-solid fa-location-pin phone-map-marker"></i>
+                        </div>
+                        <div style="font-size:12.5px; font-weight:700; color:#0f172a; margin-bottom:4px;"><i class="fa-solid fa-location-dot" style="color:#94a3b8; margin-right:4px;"></i>서울 마포구 홍익로 123, 2층</div>
+                        <div style="font-size:11px; color:#64748b; font-weight:500; padding-left:18px;">홍대입구역 9번 출구에서 150m (도보 2분)</div>
+                    </div>
+                </div>
+
+                <!-- Bottom Booking CTA -->
+                <div class="phone-bottom-cta">
+                    <button class="phone-cta-btn">빈자리 예약하기</button>
+                </div>
+
+                <!-- Home indicator line -->
+                <div class="phone-home-indicator"></div>
+            </div>
+        </div>
+
+        <!-- Floating Close Button -->
+        <button type="button" class="phone-close-btn" id="closeMobilePreviewBtn"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <!-- 확인 알림창 -->
+    <div id="confirmToast" class="toast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>등록되었습니다!</span>
+    </div>
+
+    <script>
+        const modal = document.getElementById("reservationModal");
+        const btn = document.getElementById("addReservationBtn");
+        const closeBtn = document.querySelector(".close-button");
+        const submitBtn = document.getElementById("submitReservation");
+        const toast = document.getElementById("confirmToast");
+
+        // 오버레이 열기
+        btn.onclick = function () {
+            modal.style.display = "flex";
+        }
+
+        // 오버레이 닫기 (X 버튼)
+        closeBtn.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // 모바일 앱 미리보기 연동 로직
+        const mobileModal = document.getElementById("mobilePreviewModal");
+        const openMobileBtn = document.getElementById("openMobilePreviewBtn");
+        const closeMobileBtn = document.getElementById("closeMobilePreviewBtn");
+
+        if (openMobileBtn && mobileModal && closeMobileBtn) {
+            openMobileBtn.onclick = function () {
+                // 입력 폼 필드들의 실시간 데이터를 가져와 모바일 프레임뷰에 동기화
+                const storeNameVal = document.getElementById("storeName").value || "빈자리 카페 홍대점";
+                const promoTextVal = document.getElementById("promoText").value || "";
+                const storeDescVal = document.getElementById("storeDesc").value || "";
+
+                document.getElementById("mobilePreviewStoreName").textContent = storeNameVal;
+                document.getElementById("mobilePreviewPromoText").textContent = `"${promoTextVal}"`;
+                document.getElementById("mobilePreviewDesc").textContent = storeDescVal;
+
+                mobileModal.style.display = "flex";
+            };
+
+            closeMobileBtn.onclick = function () {
+                mobileModal.style.display = "none";
+            };
+        }
+
+        // 오버레이 닫기 (배경 클릭)
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+            if (event.target == mobileModal) {
+                mobileModal.style.display = "none";
+            }
+        }
+
+        // 예약 생성 버튼 클릭 시
+        submitBtn.onclick = function () {
+            // 입력값 확인 (간단히)
+            const name = document.getElementById("custName").value;
+            const phone = document.getElementById("custPhone").value;
+            const seat = document.getElementById("seatSelect").value;
+
+            if (!name || !phone || !seat) {
+                alert("모든 정보를 입력해주세요.");
+                return;
+            }
+
+            // 오버레이 닫기
+            modal.style.display = "none";
+
+            // 토스트 알림 표시
+            toast.classList.add("show");
+
+            // 3초 후 토스트 숨기기
+            setTimeout(() => {
+                toast.classList.remove("show");
+                // 폼 초기화
+                document.getElementById("custName").value = "";
+                document.getElementById("custPhone").value = "";
+                document.getElementById("seatSelect").value = "";
+            }, 3000);
+        }
+
+        // 상태 배지 토글 로직
+        const statusBadge = document.getElementById("statusBadge");
+        if (statusBadge) {
+            statusBadge.onclick = function () {
+                if (statusBadge.classList.contains("online")) {
+                    statusBadge.classList.remove("online");
+                    statusBadge.classList.add("preparing");
+                    statusBadge.textContent = "운영 준비 중";
+                } else {
+                    statusBadge.classList.remove("preparing");
+                    statusBadge.classList.add("online");
+                    statusBadge.textContent = "운영 중";
+                }
+            };
+        }
+
+        // 편의시설 토글 로직
+        const facilityItems = document.querySelectorAll(".facility-item");
+        facilityItems.forEach(item => {
+            item.onclick = function () {
+                item.classList.toggle("active");
+            };
+        });
+    </script>
+</body>
+
+</html>

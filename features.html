@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>주요 기능 — 빈자리 파트너즈</title>
+    <meta name="description" content="매장의 빈자리를 채우는 가장 스마트한 방법. 빈자리 파트너즈.">
+    <link rel="icon" href="favicon.ico?v=1" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Simulator Technical Board Look */
+        .technical-board {
+            border: 1px solid var(--black);
+            background: transparent;
+            padding: 40px;
+            width: 100%;
+            max-width: 580px;
+        }
+
+        .sim-grid-layout {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--black);
+            padding-bottom: 30px;
+        }
+
+        .sim-grid-seat {
+            aspect-ratio: 1;
+            border: 1px solid var(--gray-3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--black);
+            cursor: pointer !important;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            background: transparent;
+        }
+
+        .sim-grid-seat:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .sim-grid-seat.occupied {
+            background: var(--black);
+            border-color: var(--black);
+            color: var(--white);
+        }
+
+        .sim-grid-seat.reserved {
+            background: transparent;
+            border: 1px dashed var(--accent);
+            color: var(--accent);
+        }
+
+        .sim-grid-seat .watt-info {
+            font-size: 9px;
+            margin-top: 4px;
+            opacity: 0.7;
+        }
+
+        .sim-meta-pane {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 24px;
+        }
+
+        .sim-meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .sim-meta-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--gray-3);
+        }
+
+        .sim-meta-val {
+            font-family: var(--sans);
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--black);
+        }
+
+        .sim-meta-desc {
+            font-size: 11px;
+            color: var(--gray-4);
+        }
+
+        .sim-logger-term {
+            border-top: 1px solid var(--black);
+            padding-top: 20px;
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--gray-4);
+            height: 90px;
+            overflow-y: auto;
+            line-height: 1.6;
+        }
+
+        .sim-logger-term p {
+            margin-bottom: 4px;
+        }
+
+        .sim-logger-timestamp {
+            color: var(--accent);
+            margin-right: 8px;
+        }
+
+        .progress-ring-section {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            grid-column: span 2;
+            padding: 16px;
+            border: 1px solid var(--gray-1);
+        }
+
+        /* ═══════════════════════════════════════════
+           STICKY SCROLL FEATURE SECTION
+           ═══════════════════════════════════════════ */
+        .sticky-scroll-section {
+            position: relative;
+            background: #f8fafc;
+            border-top: 1px solid var(--gray-1);
+            border-bottom: 1px solid var(--gray-1);
+            width: 100%;
+        }
+
+        .sticky-scroll-container {
+            display: flex;
+            width: 100%;
+        }
+
+        .sticky-artwork-pane {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, rgba(126, 55, 249, 0.03) 0%, transparent 70%);
+            border-right: 1px solid var(--gray-1);
+            overflow: hidden;
+        }
+
+        .scrolling-text-pane {
+            width: 50%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .scroll-step {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 12% 0 10%;
+            transition: all 0.6s ease;
+            opacity: 0.25;
+            transform: translateY(20px);
+        }
+
+        .scroll-step.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .step-badge {
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .step-eyebrow {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--gray-3);
+            margin-bottom: 8px;
+        }
+
+        .scroll-step h2.step-heading {
+            font-size: clamp(28px, 3.5vw, 42px);
+            font-weight: 900;
+            line-height: 1.25;
+            letter-spacing: -2px;
+            color: var(--black);
+            margin-bottom: 24px;
+        }
+
+        .step-description {
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--gray-4);
+        }
+
+        /* Artwork Cards */
+        .artwork-card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0.92) translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+        }
+
+        .artwork-card.active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+        }
+
+        .artwork-wrapper {
+            width: 95%;
+            max-width: 550px;
+            aspect-ratio: 1.1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ARTWORK 1: SOLAR SYSTEM ORBITS (Flat, Large, Stroke-free, Glow-free) */
+        .solar-system {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .solar-center {
+            width: 230px;
+            height: 230px;
+            background: #ffffff;
+            border-radius: 50%;
+            position: relative;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+            overflow: hidden;
+        }
+
+        .solar-center img {
+            width: 195px;
+            height: 195px;
+            object-fit: contain;
+            border-radius: 36px;
+        }
+
+        .orbit {
+            position: absolute;
+            border: none;
+            background: rgba(15, 23, 42, 0.03);
+            border-radius: 50%;
+            animation: spin-orbit 25s linear infinite;
+        }
+
+        .orbit-1 {
+            width: 310px;
+            height: 310px;
+            top: calc(50% - 155px);
+            left: calc(50% - 155px);
+        }
+
+        .orbit-2 {
+            width: 470px;
+            height: 470px;
+            top: calc(50% - 235px);
+            left: calc(50% - 235px);
+            animation-duration: 40s;
+            animation-direction: reverse;
+        }
+
+        @keyframes spin-orbit {
+            to { transform: rotate(360deg); }
+        }
+
+        .orbit-node {
+            position: absolute;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            color: white;
+            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .orbit-node.node-occupied {
+            background: var(--accent);
+        }
+
+        .orbit-node.node-available {
+            background: #cbd5e1;
+            color: #475569;
+        }
+
+        .orbit-node.node-eco {
+            background: #475569;
+        }
+
+        .orbit-node.node-pos1 { top: 0; left: 50%; transform: translate(-50%, -50%); }
+        .orbit-node.node-pos2 { top: 85%; left: 15%; transform: translate(-50%, -50%); }
+        .orbit-node.node-pos3 { top: 15%; left: 85%; transform: translate(-50%, -50%); }
+        .orbit-node.node-pos4 { top: 50%; left: 0%; transform: translate(-50%, -50%); }
+        .orbit-node.node-pos5 { top: 50%; left: 100%; transform: translate(-50%, -50%); }
+
+        /* ARTWORK 2: KINETIC POWER RING (Flat, Large, Stroke-free, Glow-free) */
+        .kinetic-ring-container {
+            position: relative;
+            width: 460px;
+            height: 460px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .kinetic-svg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .kinetic-center {
+            width: 220px;
+            height: 220px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            box-shadow: 0 15px 30px rgba(15, 23, 42, 0.08);
+            color: white;
+        }
+
+        .kinetic-plug-icon {
+            font-size: 68px;
+            color: white;
+            animation: plug-float 3s infinite alternate ease-in-out;
+        }
+
+        @keyframes plug-float {
+            from { transform: translateY(0); }
+            to { transform: translateY(-8px); }
+        }
+
+        .kinetic-label {
+            font-family: var(--sans);
+            font-size: 11px;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        /* ARTWORK 3: STORE-TO-USER BEAM (Flat, Large, Stroke-free, Glow-free) */
+        .signal-container {
+            position: relative;
+            width: 520px;
+            height: 226px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+        }
+
+        .signal-node {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+            z-index: 3;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+            transition: all 0.5s ease;
+        }
+
+        .signal-node.store-node {
+            background: var(--accent);
+            color: white;
+        }
+
+        .signal-node.user-node {
+            background: #334155;
+            color: white;
+        }
+
+        .signal-wave-path {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Responsive Breakpoints for Sticky Section */
+        @media (max-width: 768px) {
+            .sticky-scroll-container {
+                flex-direction: column;
+            }
+
+            .sticky-artwork-pane {
+                width: 100%;
+                height: 40vh;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid var(--gray-1);
+            }
+
+            .scrolling-text-pane {
+                width: 100%;
+            }
+
+            .scroll-step {
+                height: auto;
+                padding: 60px 24px;
+            }
+
+            .artwork-wrapper {
+                max-width: 340px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Page Transition Overlay -->
+    <div class="page-transition-overlay show-title" id="pageTransitionOverlay">
+        <div class="transition-title">FEATURES</div>
+    </div>
+
+    <!-- Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <!-- NAV -->
+    <nav>
+        <a href="index.html" class="nav-brand">
+            <img src="logo.png" alt="Binjari" class="nav-logo">
+        </a>
+        <div class="nav-links">
+            <a href="about.html">소개</a>
+            <a href="features.html" class="active">기능</a>
+            <a href="testimonials.html">후기</a>
+            <a href="support.html">지원</a>
+        </div>
+        <div class="nav-action">
+            <a href="login.html">Login →</a>
+        </div>
+    </nav>
+
+    <!-- ══════════════════════════════════════════
+         01 — HERO
+    ══════════════════════════════════════════ -->
+    <section class="hero-sub" id="hero">
+        <div class="hero-number">02 / FEATURES</div>
+        <h1 class="hero-title">매장 효율과 에너지 절약</h1>
+        <p class="hero-desc">기기 세팅 없이 실시간 좌석 현황을 파악하고 대기전력을 원격 제어합니다.</p>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         02 — FRIENDLY FEATURES SECTION
+    ══════════════════════════════════════════ -->
+    <section class="editorial reveal" style="padding-bottom: 120px;">
+        <div class="editorial-label">Core Benefits</div>
+        <h2 class="editorial-heading">
+            매장 운영의 고민을<br>
+            직관적으로 해결합니다.
+        </h2>
+        <p class="editorial-body">
+            전기세 낭비와 좌석 관리의 불편함, 이제 복잡한 기기 설정 없이 간편하게 해결하세요.
+        </p>
+    </section>
+
+    <section class="three-col" style="padding: 0 var(--page-margin) 200px;">
+        <div class="col-item reveal"
+            style="grid-column: span 6; border-top: 1px solid var(--black); padding-top: 32px;">
+            <span class="col-num">01 / SMART OUTLET</span>
+            <h3 style="font-size: 24px; font-weight: 800; margin-bottom: 16px;">손님이 나가면 전원 자동 차단</h3>
+            <p style="font-size: 15px; line-height: 1.8; color: var(--gray-4);">
+                손님이 퇴실하면 스마트 콘센트가 대기전력을 자동 차단하여 불필요한 전기세 낭비를 방지합니다.
+            </p>
+        </div>
+        <div class="col-item reveal"
+            style="grid-column: span 6; border-top: 1px solid var(--black); padding-top: 32px;">
+            <span class="col-num">02 / REMOTE SWITCH</span>
+            <h3 style="font-size: 24px; font-weight: 800; margin-bottom: 16px;">스마트폰으로 언제 어디서나 조절</h3>
+            <p style="font-size: 15px; line-height: 1.8; color: var(--gray-4);">
+                외출 중이거나 퇴근 후에도 스마트폰 앱으로 매장 내 특정 콘센트 전원을 언제든 원격 제어할 수 있습니다.
+            </p>
+        </div>
+        <div class="col-item reveal"
+            style="grid-column: span 6; border-top: 1px solid var(--black); padding-top: 32px; margin-top: 40px;">
+            <span class="col-num">03 / EASY ANALYTICS</span>
+            <h3 style="font-size: 24px; font-weight: 800; margin-bottom: 16px;">바쁜 피크타임 요일별 한눈에 확인</h3>
+            <p style="font-size: 15px; line-height: 1.8; color: var(--gray-4);">
+                요일·시간대별 손님이 몰리는 피크타임을 한눈에 시각화하여, 직원 스케줄과 매장 관리를 효율화합니다.
+            </p>
+        </div>
+        <div class="col-item reveal"
+            style="grid-column: span 6; border-top: 1px solid var(--black); padding-top: 32px; margin-top: 40px;">
+            <span class="col-num">04 / SECURE OFFLINE</span>
+            <h3 style="font-size: 24px; font-weight: 800; margin-bottom: 16px;">인터넷이 일시 중단되어도 안심 작동</h3>
+            <p style="font-size: 15px; line-height: 1.8; color: var(--gray-4);">
+                네트워크 연결이 임시 차단되어도 기기 자체 메모리로 정상 작동하며, 복구 즉시 사용 내역이 자동 동기화됩니다.
+            </p>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         03 — INTERACTIVE STICKY SCROLL SECTION
+    ══════════════════════════════════════════ -->
+    <section class="sticky-scroll-section" id="stickyScrollSection">
+        <div class="sticky-scroll-container">
+            <!-- Left: Sticky Visual Pane -->
+            <div class="sticky-artwork-pane">
+                <!-- Artwork 1: Solar System Orbits (Overview) -->
+                <div class="artwork-card active" data-artwork="intro">
+                    <div class="artwork-wrapper">
+                        <div class="solar-system">
+                            <div class="solar-center">
+                                <img src="image/appicon.png" alt="BINJARI Logo">
+                            </div>
+                            <div class="orbit orbit-1">
+                                <div class="orbit-node node-occupied node-pos1"><i class="fa-solid fa-user"></i></div>
+                                <div class="orbit-node node-available node-pos2"><i class="fa-solid fa-check"></i></div>
+                            </div>
+                            <div class="orbit orbit-2">
+                                <div class="orbit-node node-eco node-pos3"><i class="fa-solid fa-leaf"></i></div>
+                                <div class="orbit-node node-occupied node-pos4"><i class="fa-solid fa-user"></i></div>
+                                <div class="orbit-node node-available node-pos5"><i class="fa-solid fa-check"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Artwork 2: Kinetic Power Ring (Policy) -->
+                <div class="artwork-card" data-artwork="policy">
+                    <div class="artwork-wrapper">
+                        <div class="kinetic-ring-container">
+                            <svg class="kinetic-svg" viewBox="0 0 200 200" style="animation: spin-orbit 20s linear infinite;">
+                                <!-- Segmented Ring Arcs utilizing path fill (stroke: none) -->
+                                <path d="M 100,10 A 90,90 0 0,1 180,60 L 165,70 A 75,75 0 0,0 100,25 Z" fill="#cbd5e1" />
+                                <path d="M 190,100 A 90,90 0 0,1 140,180 L 130,165 A 75,75 0 0,0 175,100 Z" fill="var(--accent)" />
+                                <path d="M 100,190 A 90,90 0 0,1 20,140 L 35,130 A 75,75 0 0,0 100,175 Z" fill="#cbd5e1" />
+                                <path d="M 10,100 A 90,90 0 0,1 60,20 L 70,35 A 75,75 0 0,0 25,100 Z" fill="#cbd5e1" />
+                            </svg>
+                            <div class="kinetic-center">
+                                <i class="fa-solid fa-plug kinetic-plug-icon"></i>
+                                <span class="kinetic-label">RULE ACTIVE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Artwork 3: Store-to-User Beam (Promo) -->
+                <div class="artwork-card" data-artwork="promo">
+                    <div class="artwork-wrapper">
+                        <div class="signal-container">
+                            <div class="signal-node store-node">
+                                <i class="fa-solid fa-mug-hot"></i>
+                            </div>
+                            <svg class="signal-wave-path" viewBox="0 0 460 200">
+                                <!-- Static path dots (flat circles) distributed across the 460px width -->
+                                <circle cx="115" cy="85" r="3.5" fill="#cbd5e1" />
+                                <circle cx="145" cy="74" r="3.5" fill="#cbd5e1" />
+                                <circle cx="175" cy="67" r="3.5" fill="#cbd5e1" />
+                                <circle cx="205" cy="65" r="3.5" fill="#cbd5e1" />
+                                <circle cx="230" cy="65" r="3.5" fill="#cbd5e1" />
+                                <circle cx="255" cy="67" r="3.5" fill="#cbd5e1" />
+                                <circle cx="285" cy="74" r="3.5" fill="#cbd5e1" />
+                                <circle cx="315" cy="85" r="3.5" fill="#cbd5e1" />
+                                <circle cx="345" cy="100" r="3.5" fill="#cbd5e1" />
+                                
+                                <!-- Animated moving node along an invisible path -->
+                                <circle r="8.5" fill="var(--accent)">
+                                    <animateMotion path="M 75,100 Q 230,30 385,100" dur="2.5s" repeatCount="indefinite" />
+                                </circle>
+                            </svg>
+                            <div class="signal-node user-node">
+                                <i class="fa-solid fa-user-tag"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Scrolling Text Steps -->
+            <div class="scrolling-text-pane">
+                <div class="scroll-step active" data-step="intro">
+                    <div class="step-badge">01 / Overview</div>
+                    <h2 class="step-heading">비어있는 매장 좌석,<br>똑똑하게 관리하세요.</h2>
+                    <p class="step-description">매장 상황에 맞는 자율적인 정책 설정으로 좌석 회전율을 최적화하고 단골 고객 유입을 늘립니다.</p>
+                </div>
+                <div class="scroll-step" data-step="policy">
+                    <div class="step-badge">02 / Policy Control</div>
+                    <div class="step-eyebrow">자율적인 정책 설정</div>
+                    <h2 class="step-heading">이용 시간과 콘센트를<br>원하는 규칙으로 제어해요.</h2>
+                    <p class="step-description">좌석별 이용 시간과 전력 차단 유무를 매장 스케줄에 맞춰 정교하게 일괄 제어할 수 있습니다.</p>
+                </div>
+                <div class="scroll-step" data-step="promo">
+                    <div class="step-badge">03 / Target Promo</div>
+                    <div class="step-eyebrow">정밀한 타겟팅 홍보</div>
+                    <h2 class="step-heading">목적형 방문 고객에게<br>우리 매장의 특장점을 노출해요.</h2>
+                    <p class="step-description">콘센트석을 찾는 작업 목적 손님들에게 실시간 좌석 현황과 혜택을 매칭합니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         04 — CTA (Features Packages)
+    ══════════════════════════════════════════ -->
+    <section class="cta-section cta-features-pkg">
+        <div class="cta-eyebrow reveal">Pricing Packages</div>
+        <h2 class="cta-bigtype reveal">우리 매장에 딱 맞는 스마트 요금제</h2>
+        <p class="cta-sub reveal" style="margin: 0 0 40px 0;">매장 규모에 맞춰 합리적인 요금제를 선택하세요. 첫 30일은 서비스와 스마트 기기가 무료로 제공됩니다.</p>
+        <div class="cta-pkg-grid reveal">
+            <div class="cta-pkg-card">
+                <div>
+                    <h3 class="pkg-title">베이직 (Basic)</h3>
+                    <div class="pkg-price">무료 (Free)</div>
+                    <ul class="pkg-features-list">
+                        <li>좌석 예약 관리: 10석 제한</li>
+                        <li>데이터 리포트: 주간 요약 제공</li>
+                        <li>손님 앱(binjari) 매장 일반 노출</li>
+                        <li>대기전력 자동 차단 콘센트 지원</li>
+                        <li>기본 고객 지원 서비스</li>
+                    </ul>
+                </div>
+                <a href="support.html" class="btn-big outline"
+                    style="width: 100%; text-align: center; justify-content: center;">신청 및 문의</a>
+            </div>
+            <div class="cta-pkg-card" style="border-color: var(--accent);">
+                <div>
+                    <h3 class="pkg-title" style="color: var(--accent);">프로 (Pro)</h3>
+                    <div class="pkg-price">월 59,000원</div>
+                    <ul class="pkg-features-list">
+                        <li>좌석 예약 관리: 무제한 (제한 없음)</li>
+                        <li>데이터 리포트: 실시간 상세 분석</li>
+                        <li>손님 앱(binjari) 상단 우선 노출</li>
+                        <li>원격 스마트 전원 조절 및 플러그 대여</li>
+                        <li>우선 순위 긴급 기술 지원</li>
+                    </ul>
+                </div>
+                <a href="support.html" class="btn-big fill"
+                    style="width: 100%; text-align: center; justify-content: center; background: var(--accent); border-color: var(--accent); color: var(--white);">신청
+                    및 문의</a>
+            </div>
+            <div class="cta-pkg-card">
+                <div>
+                    <h3 class="pkg-title">엔터프라이즈 (Enterprise)</h3>
+                    <div class="pkg-price">별도 문의</div>
+                    <ul class="pkg-features-list">
+                        <li>좌석 예약 관리: 무제한 (제한 없음)</li>
+                        <li>데이터 리포트: 커스텀 BI 리포트 제공</li>
+                        <li>손님 앱(binjari) 상단 우선 노출 + 브랜드 배너 광고</li>
+                        <li>대기전력 자동 차단 콘센트 무상 지원</li>
+                        <li>1:1 전담 매니저 전담 케어 서비스</li>
+                    </ul>
+                </div>
+                <a href="support.html" class="btn-big outline"
+                    style="width: 100%; text-align: center; justify-content: center;">신청 및 문의</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         FOOTER
+    ══════════════════════════════════════════ -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <img src="logo.png" alt="Binjari" class="footer-logo">
+                <p>매장의 빈자리를 채우는 가장 스마트한 방법. 실시간 관제, 통합 예약, 데이터 인사이트.</p>
+            </div>
+            <div class="footer-links">
+                <div class="f-col-title">Service</div>
+                <ul class="f-col-list">
+                    <li><a href="about.html">서비스 소개</a></li>
+                    <li><a href="features.html">주요 기능</a></li>
+                    <li><a href="testimonials.html">파트너 후기</a></li>
+                </ul>
+            </div>
+            <div class="footer-links-2">
+                <div class="f-col-title">Support</div>
+                <ul class="f-col-list">
+                    <li><a href="support.html">FAQ</a></li>
+                    <li><a href="support.html">문의하기</a></li>
+                    <li><a href="#">이용약관</a></li>
+                </ul>
+            </div>
+            <div class="footer-links-3">
+                <div class="f-col-title">Partners</div>
+                <ul class="f-col-list">
+                    <li><a href="login.html">로그인</a></li>
+                    <li><a href="dashboard.html">대시보드</a></li>
+                    <li><a href="#">API Docs</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Binjari Partners</span>
+        </div>
+    </footer>
+
+    <!-- ══════════════════════════════════════════
+         SCRIPTS
+    ══════════════════════════════════════════ -->
+    <script>
+        // Custom Cursor Setup
+        const dot = document.querySelector('.cursor-dot');
+        const ring = document.querySelector('.cursor-ring');
+        if (dot && ring) {
+            document.body.classList.add('custom-cursor-ready');
+            let mx = 0, my = 0, rx = 0, ry = 0;
+
+            window.addEventListener('mousemove', e => {
+                mx = e.clientX;
+                my = e.clientY;
+                document.body.classList.add('cursor-active');
+            });
+
+            document.addEventListener('mouseleave', () => {
+                document.body.classList.remove('cursor-active');
+            });
+
+            const loop = () => {
+                dot.style.transform = `translate3d(${mx}px,${my}px,0) translate(-50%,-50%)`;
+                rx += (mx - rx) * 0.1;
+                ry += (my - ry) * 0.1;
+                ring.style.transform = `translate3d(${rx}px,${ry}px,0) translate(-50%,-50%)`;
+                requestAnimationFrame(loop);
+            };
+            loop();
+
+            document.querySelectorAll('a, button, .cta-pkg-card').forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+            });
+        }
+
+        // Magnetic Hover Effect
+        const applyMagnetic = (elements) => {
+            elements.forEach(el => {
+                el.addEventListener('mousemove', function (e) {
+                    const position = el.getBoundingClientRect();
+                    const x = e.clientX - position.left - position.width / 2;
+                    const y = e.clientY - position.top - position.height / 2;
+
+                    el.style.transition = 'none';
+                    el.style.transform = `translate(${x * 0.15}px, ${y * 0.25}px)`;
+                });
+
+                el.addEventListener('mouseout', function (e) {
+                    el.style.transition = 'transform 0.5s cubic-bezier(.25,1,.5,1)';
+                    el.style.transform = 'translate(0px, 0px)';
+                });
+            });
+        };
+        applyMagnetic(document.querySelectorAll('.nav-brand, .nav-links a, .nav-action a, .btn-primary-gradient, .btn-secondary-dark, .btn-big'));
+
+        // NAV SCROLL STATE
+        const nav = document.querySelector('nav');
+        if (nav) {
+            const updateNavState = () => {
+                nav.classList.toggle('nav-scrolled', window.scrollY > 12);
+            };
+            updateNavState();
+            window.addEventListener('scroll', updateNavState, { passive: true });
+        }
+
+        // SCROLL REVEAL
+        const revealObs = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('vis');
+                    revealObs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            revealObs.observe(el);
+        });
+
+        // Interactive Sticky Scroll Section Coordination
+        const stickyObserverOptions = {
+            root: null,
+            rootMargin: '-35% 0px -35% 0px',
+            threshold: 0
+        };
+
+        const stickyObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const stepId = entry.target.getAttribute('data-step');
+                    
+                    // Activate corresponding step text
+                    document.querySelectorAll('.scroll-step').forEach(step => {
+                        step.classList.toggle('active', step.getAttribute('data-step') === stepId);
+                    });
+                    
+                    // Activate corresponding artwork card
+                    document.querySelectorAll('.artwork-card').forEach(art => {
+                        art.classList.toggle('active', art.getAttribute('data-artwork') === stepId);
+                    });
+                }
+            });
+        }, stickyObserverOptions);
+
+        document.querySelectorAll('.scroll-step').forEach(step => {
+            stickyObserver.observe(step);
+        });
+    </script>
+    <script src="transition.js"></script>
+</body>
+
+</html>

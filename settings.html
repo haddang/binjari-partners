@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>운영 정책 설정 - 빈자리 파트너즈</title>
+    <link rel="icon" href="favicon.ico?v=1" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="wrapper">
+        <!-- 사이드바 -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <img src="logo.png" alt="BINJARI Partners Logo" class="logo-image">
+            </div>
+            <ul class="nav-links">
+                <li><a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> 대시보드</a></li>
+                <li><a href="seats.html"><i class="fa-solid fa-chair"></i> 좌석 관리</a></li>
+                <li><a href="reservations.html"><i class="fa-solid fa-calendar-check"></i> 예약 내역</a></li>
+                <li><a href="store.html"><i class="fa-solid fa-store"></i> 매장 프로필 관리</a></li>
+                <li class="active"><a href="settings.html"><i class="fa-solid fa-gears"></i> 운영 정책 설정</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <div class="user-profile-card">
+                    <div class="profile-avatar">박</div>
+                    <div class="profile-info">
+                        <p class="user-name">박성훈 사장님</p>
+                        <span class="user-tier tier-pro"><i class="fa-solid fa-crown"></i> PRO</span>
+                    </div>
+                    <a href="index.html" class="logout-btn" title="로그아웃">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 메인 콘텐츠 -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="예약자 이름 또는 전화번호 검색">
+                </div>
+                <div class="top-actions">
+                    <button id="addReservationBtn" class="btn btn-primary"><i class="fa-solid fa-plus"></i> 현장 예약 추가</button>
+                    <div id="statusBadge" class="status-badge online">운영 중</div>
+                </div>
+            </header>
+
+            <div class="section-title">
+                <h2>운영 정책 설정</h2>
+                <p>예약 및 이용에 관한 매장의 세부 정책을 설정합니다.</p>
+            </div>
+
+            <section class="content-card" style="max-width: 800px;">
+                <div class="settings-group">
+                    <div class="settings-item">
+                        <div class="settings-info">
+                            <h4>예약 보증금 사용</h4>
+                            <p>노쇼(No-show) 방지를 위해 예약 시 보증금을 결제받습니다.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+
+                    <div class="settings-item" style="border-bottom:none; padding-bottom:0;">
+                        <div class="form-group" style="width: 100%;">
+                            <label class="form-label" for="depositAmount">기본 보증금액 설정</label>
+                            <select id="depositAmount" class="form-select" style="max-width: 300px;">
+                                <option value="5000">5,000원</option>
+                                <option value="10000" selected>10,000원</option>
+                                <option value="15000">15,000원</option>
+                                <option value="20000">20,000원</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <div class="settings-item">
+                        <div class="settings-info">
+                            <h4>자동 예약 취소 활성화</h4>
+                            <p>예약 시간이 지나도 입실하지 않으면 자동으로 예약을 취소합니다.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+
+                    <div class="settings-item" style="border-bottom:none; padding-bottom:0;">
+                        <div class="form-group" style="width: 100%;">
+                            <label class="form-label" for="cancelTime">자동 취소 대기 시간</label>
+                            <select id="cancelTime" class="form-select" style="max-width: 300px;">
+                                <option value="10">10분 후 취소</option>
+                                <option value="15" selected>15분 후 취소</option>
+                                <option value="30">30분 후 취소</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-group">
+                    <div class="settings-item">
+                        <div class="settings-info">
+                            <h4>실시간 현장 대기 접수</h4>
+                            <p>방문 고객이 태블릿이나 QR코드를 통해 현장 대기를 등록할 수 있습니다.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <h3 style="font-size:18px; font-weight:700; margin-bottom:20px; color:#1e293b;"><i class="fa-solid fa-clock"></i> 이용 시간 및 회전율 관리 규칙</h3>
+
+                <div class="settings-group">
+                    <div class="settings-item">
+                        <div class="settings-info">
+                            <h4>만석 시 이용 시간 자동 제한 작동</h4>
+                            <p>매장 내 잔여 좌석이 없을 경우, 신규 및 기존 이용자의 최대 이용 시간을 제한하여 회전율을 높입니다.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" checked id="toggleTimeLimit" onchange="document.getElementById('timeLimitSub').style.display = this.checked ? 'flex' : 'none';">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+
+                    <div class="policy-sub-group" id="timeLimitSub">
+                        <div class="policy-sub-item">
+                            <div class="policy-sub-info">
+                                <h5>만석 시 최대 이용 시간</h5>
+                                <p>제한이 발동되면 고객 앱 및 알림톡으로 안내됩니다.</p>
+                            </div>
+                            <select class="form-select" style="width:200px;">
+                                <option value="2">2시간 제한</option>
+                                <option value="3" selected>3시간 제한</option>
+                                <option value="4">4시간 제한</option>
+                            </select>
+                        </div>
+                        <div class="policy-sub-item">
+                            <div class="policy-sub-info">
+                                <h5>대기자 없을 시 연장 허용</h5>
+                                <p>이용 종료 15분 전 대기자가 없으면 1시간 단위 연장을 허용합니다.</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <div class="settings-item">
+                        <div class="settings-info">
+                            <h4>마감 시간 전 입장 및 예약 제한</h4>
+                            <p>영업 종료 직전 무분별한 예약과 입장을 방지하기 위한 마감 규칙입니다.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" checked id="toggleCloseRule" onchange="document.getElementById('closeRuleSub').style.display = this.checked ? 'flex' : 'none';">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+
+                    <div class="policy-sub-group" id="closeRuleSub">
+                        <div class="policy-sub-item">
+                            <div class="policy-sub-info">
+                                <h5>신규 예약 및 현장 입장 차단 기준</h5>
+                                <p>설정된 시간 이후에는 신규 예약을 받지 않습니다.</p>
+                            </div>
+                            <select class="form-select" style="width:200px;">
+                                <option value="30">마감 30분 전 차단</option>
+                                <option value="60" selected>마감 1시간 전 차단</option>
+                                <option value="120">마감 2시간 전 차단</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <h3 style="font-size:18px; font-weight:700; margin-bottom:20px; color:#1e293b;"><i class="fa-solid fa-bolt"></i> 콘센트 사용 유무 및 전력 모니터링 규칙</h3>
+
+                <div class="settings-group">
+                    <div class="settings-item">
+                        <div class="settings-info">
+                            <h4>좌석별 실시간 전력 사용량 집계 (모니터닝)</h4>
+                            <p>각 테이블 및 좌석에 설치된 스마트 플러그를 통해 실시간 전력 소비량과 콘센트 활성화 비율을 대시보드에서 확인합니다.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <div class="settings-item">
+                        <div class="settings-info">
+                            <h4>기준 초과 과전력 감지 알림</h4>
+                            <p>좌석에서 기준치 이상의 고전력 기기(예: 개인 전열기구 등) 사용이 감지되면 관리자에게 즉시 알림을 발송합니다.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" checked id="toggleOverPower" onchange="document.getElementById('overPowerSub').style.display = this.checked ? 'flex' : 'none';">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+
+                    <div class="policy-sub-group" id="overPowerSub">
+                        <div class="policy-sub-item">
+                            <div class="policy-sub-info">
+                                <h5>과전력 감지 기준 설정</h5>
+                                <p>설정된 와트(W)를 초과할 경우 알림이 발생합니다.</p>
+                            </div>
+                            <select class="form-select" style="width:200px;">
+                                <option value="300">300W 초과 감지 시</option>
+                                <option value="500" selected>500W 초과 감지 시</option>
+                                <option value="1000">1,000W 초과 감지 시</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <div class="settings-item">
+                        <div class="settings-info">
+                            <h4>콘센트 좌석 프리미엄 요금제 적용</h4>
+                            <p>콘센트가 배치된 좌석을 전용 요금제로 분리하여 시간당 부가 요금을 설정합니다.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="togglePremium" onchange="document.getElementById('premiumSub').style.display = this.checked ? 'flex' : 'none';">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+
+                    <div class="policy-sub-group" id="premiumSub" style="display:none;">
+                        <div class="policy-sub-item">
+                            <div class="policy-sub-info">
+                                <h5>콘센트 좌석 시간당 추가 요금</h5>
+                                <p>일반 좌석 대비 추가되는 시간당 금액입니다.</p>
+                            </div>
+                            <select class="form-select" style="width:200px;">
+                                <option value="500">시간당 +500원</option>
+                                <option value="1000" selected>시간당 +1,000원</option>
+                                <option value="1500">시간당 +1,500원</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions" style="margin-top:40px;">
+                    <button type="button" class="btn btn-secondary" onclick="location.reload();">초기화</button>
+                    <button type="button" class="btn btn-primary" style="padding:12px 30px; font-size:16px;" onclick="alert('운영 정책이 성공적으로 저장되었습니다.');">정책 설정 저장</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- 현장 예약 추가 오버레이 -->
+    <div id="reservationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <div class="modal-body">
+                <!-- 좌측: QR 코드 섹션 -->
+                <div class="qr-section">
+                    <h3>앱으로 직접 예약하기</h3>
+                    <p>QR코드를 스캔하여 간편하게 예약하세요.</p>
+                    <div class="qr-container">
+                        <i class="fa-solid fa-qrcode"></i>
+                        <p class="qr-hint">앱에서 '빈자리'를 검색하세요</p>
+                    </div>
+                </div>
+
+                <!-- 우측: 정보 입력 섹션 -->
+                <div class="info-section">
+                    <h3>현장 예약 정보 입력</h3>
+                    <div class="form-group">
+                        <label class="form-label">고객 성함</label>
+                        <input type="text" class="form-input" id="custName" placeholder="고객의 성함을 입력하세요">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">연락처</label>
+                        <input type="tel" class="form-input" id="custPhone" placeholder="010-0000-0000">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">이용 좌석</label>
+                        <select class="form-select" id="seatSelect">
+                            <option value="">좌석 선택</option>
+                            <option value="01">01번 좌석</option>
+                            <option value="02">02번 좌석</option>
+                            <option value="03">03번 좌석</option>
+                            <option value="04">04번 좌석 (창가)</option>
+                            <option value="05">05번 좌석 (창가)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">이용 시간</label>
+                        <select class="form-select" id="timeSelect">
+                            <option value="1">1시간</option>
+                            <option value="2">2시간</option>
+                            <option value="3">3시간</option>
+                            <option value="4">4시간</option>
+                            <option value="6">6시간</option>
+                        </select>
+                    </div>
+                    <div class="form-actions" style="border-top: none; margin-top: 10px; padding-top: 0;">
+                        <button id="submitReservation" class="btn btn-primary"
+                            style="width: 100%; height: 50px; font-size: 16px;">예약 생성</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 확인 알림창 -->
+    <div id="confirmToast" class="toast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>등록되었습니다!</span>
+    </div>
+
+    <script>
+        const modal = document.getElementById("reservationModal");
+        const btn = document.getElementById("addReservationBtn");
+        const closeBtn = document.querySelector(".close-button");
+        const submitBtn = document.getElementById("submitReservation");
+        const toast = document.getElementById("confirmToast");
+
+        // 오버레이 열기
+        btn.onclick = function () {
+            modal.style.display = "flex";
+        }
+
+        // 오버레이 닫기 (X 버튼)
+        closeBtn.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // 오버레이 닫기 (배경 클릭)
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // 예약 생성 버튼 클릭 시
+        submitBtn.onclick = function () {
+            // 입력값 확인 (간단히)
+            const name = document.getElementById("custName").value;
+            const phone = document.getElementById("custPhone").value;
+            const seat = document.getElementById("seatSelect").value;
+
+            if (!name || !phone || !seat) {
+                alert("모든 정보를 입력해주세요.");
+                return;
+            }
+
+            // 오버레이 닫기
+            modal.style.display = "none";
+
+            // 토스트 알림 표시
+            toast.classList.add("show");
+
+            // 3초 후 토스트 숨기기
+            setTimeout(() => {
+                toast.classList.remove("show");
+                // 폼 초기화
+                document.getElementById("custName").value = "";
+                document.getElementById("custPhone").value = "";
+                document.getElementById("seatSelect").value = "";
+            }, 3000);
+        }
+
+        // 상태 배지 토글 로직
+        const statusBadge = document.getElementById("statusBadge");
+        if (statusBadge) {
+            statusBadge.onclick = function () {
+                if (statusBadge.classList.contains("online")) {
+                    statusBadge.classList.remove("online");
+                    statusBadge.classList.add("preparing");
+                    statusBadge.textContent = "운영 준비 중";
+                } else {
+                    statusBadge.classList.remove("preparing");
+                    statusBadge.classList.add("online");
+                    statusBadge.textContent = "운영 중";
+                }
+            };
+        }
+    </script>
+</body>
+</html>

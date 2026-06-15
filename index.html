@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>빈자리 파즈너즈</title>
+    <meta name="description" content="매장의 빈자리를 채우는 가장 스마트한 방법. 빈자리 파트너즈.">
+    <link rel="icon" href="favicon.ico?v=1" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <!-- Page Transition Overlay -->
+    <div class="page-transition-overlay show-title" id="pageTransitionOverlay">
+        <div class="transition-title">HOME</div>
+    </div>
+
+    <!-- Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <!-- Fixed Background Chair -->
+    <div class="fixed-bg-chair">
+        <img src="image/chair.png" alt="Floating Chair">
+    </div>
+
+    <!-- Grid Overlay (toggle with G key) -->
+    <div class="grid-overlay" id="gridOverlay">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <!-- NAV -->
+    <nav>
+        <a href="index.html" class="nav-brand">
+            <img src="logo.png" alt="Binjari" class="nav-logo">
+        </a>
+        <div class="nav-links">
+            <a href="about.html">소개</a>
+            <a href="features.html">기능</a>
+            <a href="testimonials.html">후기</a>
+            <a href="support.html">지원</a>
+        </div>
+        <div class="nav-action">
+            <a href="login.html">Login →</a>
+        </div>
+    </nav>
+
+    <!-- ══════════════════════════════════════════
+         01 — HERO
+    ══════════════════════════════════════════ -->
+    <section class="hero hero-home" id="hero">
+        <div class="hero-bg-media" aria-hidden="true">
+            <video class="hero-bg-video" autoplay muted loop playsinline preload="auto">
+                <source src="assets/intro.mp4" type="video/mp4">
+            </video>
+            <div class="hero-bg-overlay"></div>
+        </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         03 — EDITORIAL INTRO
+    ══════════════════════════════════════════ -->
+    <section class="editorial" id="editorial-section">
+        <div class="editorial-sticky-wrapper reveal">
+            <div class="editorial-label">About</div>
+            <h2 class="editorial-heading">
+                매장 공간의<br>
+                가치를 재정의하다
+            </h2>
+            <p class="editorial-body">
+                <span class="scroll-sentence">빈자리 파트너즈는 매장의 좌석 상태와 실시간 예약 시스템을 하나로 통합하여 편리한 관리를 돕습니다.</span>
+                <span class="scroll-sentence">자동화된 전력 제어는 물론, 직관적인 예약 대시보드와 지역 이웃을 위한 홍보 기능까지 모두 제공합니다.</span>
+                <span class="scroll-sentence">이제 번거로운 수동 매장 관리에서 벗어나, 데이터로 해결하는 가장 효율적인 매장 운영을 시작해 보세요.</span>
+            </p>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         04 — THREE COLUMNS
+    ══════════════════════════════════════════ -->
+    <section class="three-col">
+        <div class="col-item reveal" style="transition-delay: 0s;">
+            <span class="col-num">01</span>
+            <i class="fa-solid fa-bolt col-icon"></i>
+            <h3>실시간 관제</h3>
+            <p>모든 좌석 상태를 실시간으로 모니터링.<br>스마트 플러그와 연동하여 전력까지 자동 관리합니다.</p>
+        </div>
+        <div class="col-item reveal" style="transition-delay: 0.12s;">
+            <span class="col-num">02</span>
+            <i class="fa-solid fa-layer-group col-icon"></i>
+            <h3>통합 예약 허브</h3>
+            <p>앱 예약, 현장 접수, 전화 예약을 하나의 타임라인으로 통합.<br>중복 예약은 과거의 일입니다.</p>
+        </div>
+        <div class="col-item reveal" style="transition-delay: 0.24s;">
+            <span class="col-num">03</span>
+            <i class="fa-solid fa-chart-pie col-icon"></i>
+            <h3>인사이트 분석</h3>
+            <p>요일·시간대별 이용 패턴을 시각화.<br>데이터에 기반한 매출 증대 전략을 수립하세요.</p>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         02 — MARQUEE
+    ══════════════════════════════════════════ -->
+    <section class="marquee">
+        <div class="marquee-track">
+            <span class="marquee-word">Real-time<span class="dot"></span></span>
+            <span class="marquee-word outline">Reservation<span class="dot"></span></span>
+            <span class="marquee-word">Insight<span class="dot"></span></span>
+            <span class="marquee-word outline">Control<span class="dot"></span></span>
+            <span class="marquee-word">Smart Plug<span class="dot"></span></span>
+            <span class="marquee-word outline">Efficiency<span class="dot"></span></span>
+            <!-- duplicate -->
+            <span class="marquee-word">Real-time<span class="dot"></span></span>
+            <span class="marquee-word outline">Reservation<span class="dot"></span></span>
+            <span class="marquee-word">Insight<span class="dot"></span></span>
+            <span class="marquee-word outline">Control<span class="dot"></span></span>
+            <span class="marquee-word">Smart Plug<span class="dot"></span></span>
+            <span class="marquee-word outline">Efficiency<span class="dot"></span></span>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         06 — FEATURE SPREADS
+    ══════════════════════════════════════════ -->
+
+    <section class="feature-slider-section" id="feature-scroll">
+        <div class="feature-slider-container">
+            <div class="feature-slider-track">
+                <!-- Spread 01 -->
+                <section class="spread spread-panel">
+                    <div class="spread-visual reveal-left">
+                        <img src="image/feature01.png" alt="좌석 현황 모니터링" class="spread-image">
+                    </div>
+                    <div class="spread-text reveal-right">
+                        <div class="spread-num">Feature 01</div>
+                        <h3 class="spread-title">좌석 현황을<br>한눈에</h3>
+                        <p class="spread-desc">
+                            직관적인 좌석 맵 UI로 매장 내 모든 좌석의 사용 상태를 실시간 확인합니다. 빈 좌석, 사용 중, 예약 대기가 색상으로 구분되어 카운터에서 즉각적 판단이
+                            가능합니다.
+                        </p>
+                        <div class="spread-tags">
+                            <span class="tag">실시간 모니터링</span>
+                            <span class="tag">색상 구분</span>
+                            <span class="tag">즉각 대응</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Spread 02 -->
+                <section class="spread reverse spread-panel">
+                    <div class="spread-visual reveal-right">
+                        <img src="image/feature02.png" alt="통합 예약 관리" class="spread-image">
+                    </div>
+                    <div class="spread-text reveal-left">
+                        <div class="spread-num">Feature 02</div>
+                        <h3 class="spread-title">예약을<br>하나로</h3>
+                        <p class="spread-desc">
+                            앱 사전예약부터 전화 예약, 현장 접수까지 모든 채널을 하나의 타임라인으로 통합 관리합니다. 수기 예약표는 더 이상 필요하지 않습니다.
+                        </p>
+                        <div class="spread-tags">
+                            <span class="tag">통합 타임라인</span>
+                            <span class="tag">중복 방지</span>
+                            <span class="tag">자동 알림</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Spread 03 -->
+                <section class="spread spread-panel">
+                    <div class="spread-visual reveal-left">
+                        <img src="image/feature03.png" alt="데이터 인사이트" class="spread-image">
+                    </div>
+                    <div class="spread-text reveal-right">
+                        <div class="spread-num">Feature 03</div>
+                        <h3 class="spread-title">데이터로<br>설계하다</h3>
+                        <p class="spread-desc">
+                            단순 매출 집계를 넘어 요일·시간대별 방문 패턴과 좌석 선호도 분석을 제공합니다. 데이터에 기반한 인력 배치와 프로모션 전략으로 매출을 극대화하세요.
+                        </p>
+                        <div class="spread-tags">
+                            <span class="tag">패턴 분석</span>
+                            <span class="tag">매출 리포트</span>
+                            <span class="tag">전략 수립</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Slider Controls -->
+            <button class="slider-arrow prev-arrow" aria-label="이전 슬라이드">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button class="slider-arrow next-arrow" aria-label="다음 슬라이드">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+            <div class="slider-dots">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         05 — STATS BAND
+    ══════════════════════════════════════════ -->
+    <div class="stats-transition-spacer"></div>
+    <section class="stats-split-section">
+        <!-- Fixed Background Graphic for Scroll Interaction -->
+        <div class="stats-bg-fixed-wrapper">
+            <canvas id="stats-bg-canvas"></canvas>
+        </div>
+        <div class="stats-header reveal" style="padding: 0 var(--page-margin); position: relative; z-index: 2;">
+            <div class="stats-eyebrow">Impact</div>
+            <h2 class="stats-headline">
+                빈자리 파트너스는 매일<br>
+                새로운 역사를<br>
+                <span class="accent">쓰고 있어요</span>
+            </h2>
+        </div>
+
+        <div class="stats-ticker-container">
+            <div class="stats-ticker-track">
+                <!-- Card Set 1 -->
+                <div class="stats-ticker-list">
+                    <div class="stats-ticker-card">
+                        <div class="stat-card-val"><span class="num-accent" data-target="40">0</span>%</div>
+                        <div class="stat-card-label">
+                            <span class="stat-card-category">Peak-time Optimization</span>
+                            <h3 class="stat-card-title">테이블 회전율 증가</h3>
+                        </div>
+                    </div>
+                    <div class="stats-ticker-card">
+                        <div class="stat-card-val"><span class="num-accent" data-target="25">0</span>%</div>
+                        <div class="stat-card-label">
+                            <span class="stat-card-category">Smart Plug Control</span>
+                            <h3 class="stat-card-title">전력 비용 절감</h3>
+                        </div>
+                    </div>
+                    <div class="stats-ticker-card">
+                        <div class="stat-card-val"><span class="num-accent" data-target="1200">0</span>+</div>
+                        <div class="stat-card-label">
+                            <span class="stat-card-category">Nationwide Network</span>
+                            <h3 class="stat-card-title">도입 파트너 매장</h3>
+                        </div>
+                    </div>
+                    <div class="stats-ticker-card">
+                        <div class="stat-card-val"><span class="num-accent" data-target="4.9">0</span></div>
+                        <div class="stat-card-label">
+                            <span class="stat-card-category">Out of 5.0</span>
+                            <h3 class="stat-card-title">파트너 점주 만족도</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Duplicate Card Set 2 for Infinite Loop -->
+                <div class="stats-ticker-list">
+                    <div class="stats-ticker-card">
+                        <div class="stat-card-val"><span class="num-accent" data-target="40">0</span>%</div>
+                        <div class="stat-card-label">
+                            <span class="stat-card-category">Peak-time Optimization</span>
+                            <h3 class="stat-card-title">테이블 회전율 증가</h3>
+                        </div>
+                    </div>
+                    <div class="stats-ticker-card">
+                        <div class="stat-card-val"><span class="num-accent" data-target="25">0</span>%</div>
+                        <div class="stat-card-label">
+                            <span class="stat-card-category">Smart Plug Control</span>
+                            <h3 class="stat-card-title">전력 비용 절감</h3>
+                        </div>
+                    </div>
+                    <div class="stats-ticker-card">
+                        <div class="stat-card-val"><span class="num-accent" data-target="1200">0</span>+</div>
+                        <div class="stat-card-label">
+                            <span class="stat-card-category">Nationwide Network</span>
+                            <h3 class="stat-card-title">도입 파트너 매장</h3>
+                        </div>
+                    </div>
+                    <div class="stats-ticker-card">
+                        <div class="stat-card-val"><span class="num-accent" data-target="4.9">0</span></div>
+                        <div class="stat-card-label">
+                            <span class="stat-card-category">Out of 5.0</span>
+                            <h3 class="stat-card-title">파트너 점주 만족도</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Duplicate Card Set 3 for Infinite Loop -->
+                <div class="stats-ticker-list">
+                    <div class="stats-ticker-card">
+                        <div class="stat-card-val"><span class="num-accent" data-target="40">0</span>%</div>
+                        <div class="stat-card-label">
+                            <span class="stat-card-category">Peak-time Optimization</span>
+                            <h3 class="stat-card-title">테이블 회전율 증가</h3>
+                        </div>
+                    </div>
+                    <div class="stats-ticker-card">
+                        <div class="stat-card-val"><span class="num-accent" data-target="25">0</span>%</div>
+                        <div class="stat-card-label">
+                            <span class="stat-card-category">Smart Plug Control</span>
+                            <h3 class="stat-card-title">전력 비용 절감</h3>
+                        </div>
+                    </div>
+                    <div class="stats-ticker-card">
+                        <div class="stat-card-val"><span class="num-accent" data-target="1200">0</span>+</div>
+                        <div class="stat-card-label">
+                            <span class="stat-card-category">Nationwide Network</span>
+                            <h3 class="stat-card-title">도입 파트너 매장</h3>
+                        </div>
+                    </div>
+                    <div class="stats-ticker-card">
+                        <div class="stat-card-val"><span class="num-accent" data-target="4.9">0</span></div>
+                        <div class="stat-card-label">
+                            <span class="stat-card-category">Out of 5.0</span>
+                            <h3 class="stat-card-title">파트너 점주 만족도</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         07 — CTA
+    ══════════════════════════════════════════ -->
+    <section class="cta-glow-section">
+        <!-- Bubbling glowing background lights -->
+        <div class="cta-glow-container">
+            <!-- Large ambient background glows -->
+            <div class="cta-ambient-glow g1"></div>
+            <div class="cta-ambient-glow g2"></div>
+
+            <!-- Connected Smart Grid Layout Overlay -->
+            <div class="cta-grid-overlay"></div>
+
+            <!-- Pulsing Concentric Remote Signal Waves -->
+            <div class="cta-ripple-ring"></div>
+            <div class="cta-ripple-ring"></div>
+            <div class="cta-ripple-ring"></div>
+            <div class="cta-ripple-ring"></div>
+        </div>
+        <div class="cta-glow-content reveal">
+            <div class="cta-eyebrow">Get Started</div>
+            <h2 class="cta-bigtype">
+                스마트한 매장 관리,<br>
+                <span class="accent">지금 시작하세요.</span>
+            </h2>
+            <p class="cta-sub">
+                수동 자원 관리를 멈추고 데이터 기반 운영으로 전환하세요. 30일 무료 체험 기간 동안 매장의 놀라운 변화를 직접 경험하실 수 있습니다.
+            </p>
+            <div class="cta-actions">
+                <a href="login.html" class="btn-big fill">시작하기 →</a>
+                <a href="about.html" class="btn-big outline">더 알아보기</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         FOOTER
+    ══════════════════════════════════════════ -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <img src="logo.png" alt="Binjari" class="footer-logo">
+                <p>매장의 빈자리를 채우는 가장 스마트한 방법. 실시간 관제, 통합 예약, 데이터 인사이트.</p>
+            </div>
+            <div class="footer-links">
+                <div class="f-col-title">Service</div>
+                <ul class="f-col-list">
+                    <li><a href="about.html">서비스 소개</a></li>
+                    <li><a href="features.html">주요 기능</a></li>
+                    <li><a href="testimonials.html">파트너 후기</a></li>
+                </ul>
+            </div>
+            <div class="footer-links-2">
+                <div class="f-col-title">Support</div>
+                <ul class="f-col-list">
+                    <li><a href="support.html">FAQ</a></li>
+                    <li><a href="support.html">문의하기</a></li>
+                    <li><a href="#">이용약관</a></li>
+                </ul>
+            </div>
+            <div class="footer-links-3">
+                <div class="f-col-title">Partners</div>
+                <ul class="f-col-list">
+                    <li><a href="login.html">로그인</a></li>
+                    <li><a href="dashboard.html">대시보드</a></li>
+                    <li><a href="#">API Docs</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Binjari Partners</span>
+
+    </footer>
+
+    <!-- ══════════════════════════════════════════
+         SCRIPTS
+    ══════════════════════════════════════════ -->
+    <script>
+        // ─── CURSOR ─────────────────────────
+        const dot = document.querySelector('.cursor-dot');
+        const ring = document.querySelector('.cursor-ring');
+        if (dot && ring) {
+            document.body.classList.add('custom-cursor-ready');
+            let mx = 0, my = 0, rx = 0, ry = 0;
+
+            window.addEventListener('mousemove', e => {
+                mx = e.clientX;
+                my = e.clientY;
+                document.body.classList.add('cursor-active');
+            });
+
+            document.addEventListener('mouseleave', () => {
+                document.body.classList.remove('cursor-active');
+            });
+
+            const loop = () => {
+                dot.style.transform = `translate3d(${mx}px,${my}px,0) translate(-50%,-50%)`;
+                rx += (mx - rx) * 0.1;
+                ry += (my - ry) * 0.1;
+                ring.style.transform = `translate3d(${rx}px,${ry}px,0) translate(-50%,-50%)`;
+                requestAnimationFrame(loop);
+            };
+            loop();
+
+            document.querySelectorAll('a, button, .col-item, .tag, .visual-float, .spread-panel').forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+            });
+        }
+
+        // ─── MAGNETIC ───────────────────────
+        document.querySelectorAll('.btn-fill, .btn-ghost, .btn-big, .nav-brand, .nav-links a, .nav-action a').forEach(el => {
+            el.addEventListener('mousemove', e => {
+                const r = el.getBoundingClientRect();
+                const x = e.clientX - r.left - r.width / 2;
+                const y = e.clientY - r.top - r.height / 2;
+                el.style.transition = 'none';
+                el.style.transform = `translate(${x * 0.15}px,${y * 0.25}px)`;
+            });
+            el.addEventListener('mouseleave', () => {
+                el.style.transition = 'transform 0.5s cubic-bezier(.25,1,.5,1)';
+                el.style.transform = 'translate(0,0)';
+            });
+        });
+
+        // ─── GRID TOGGLE (G key) ────────────
+        document.addEventListener('keydown', e => {
+            if (e.key === 'g' || e.key === 'G') {
+                document.getElementById('gridOverlay').classList.toggle('show');
+            }
+        });
+
+        // ─── NAV SCROLL STATE ───────────────
+        const nav = document.querySelector('nav');
+        if (nav) {
+            const updateNavState = () => {
+                nav.classList.toggle('nav-scrolled', window.scrollY > 12);
+            };
+            updateNavState();
+            window.addEventListener('scroll', updateNavState, { passive: true });
+        }
+
+        // ─── FEATURE INTERACTIVE SLIDER ─────────────
+        const sliderTrack = document.querySelector('.feature-slider-track');
+        const sliderPanels = document.querySelectorAll('.feature-slider-track .spread-panel');
+        const prevArrow = document.querySelector('.slider-arrow.prev-arrow');
+        const nextArrow = document.querySelector('.slider-arrow.next-arrow');
+        const sliderDots = document.querySelectorAll('.slider-dots .dot');
+
+        if (sliderTrack && sliderPanels.length > 0) {
+            let currentSlide = 0;
+            const totalSlides = sliderPanels.length;
+
+            const goToSlide = (index) => {
+                if (index < 0) index = 0;
+                if (index >= totalSlides) index = totalSlides - 1;
+
+                currentSlide = index;
+
+                // Move slide track
+                sliderTrack.style.transform = `translate3d(${-100 * currentSlide}vw, 0, 0)`;
+
+                // Update arrows status
+                if (prevArrow) prevArrow.disabled = (currentSlide === 0);
+                if (nextArrow) nextArrow.disabled = (currentSlide === totalSlides - 1);
+
+                // Update active dot
+                sliderDots.forEach((dot, idx) => {
+                    dot.classList.toggle('active', idx === currentSlide);
+                });
+
+                // Update active slide for text fade-in
+                sliderPanels.forEach((panel, idx) => {
+                    panel.classList.toggle('active-slide', idx === currentSlide);
+                });
+            };
+
+            // Bind Arrow Buttons
+            if (prevArrow) {
+                prevArrow.addEventListener('click', () => {
+                    goToSlide(currentSlide - 1);
+                });
+            }
+
+            if (nextArrow) {
+                nextArrow.addEventListener('click', () => {
+                    goToSlide(currentSlide + 1);
+                });
+            }
+
+            // Bind Pagination Dots
+            sliderDots.forEach((dot) => {
+                dot.addEventListener('click', () => {
+                    const targetIndex = parseInt(dot.dataset.index);
+                    goToSlide(targetIndex);
+                });
+            });
+
+            // Initialize slider states
+            goToSlide(0);
+        }
+
+        // ─── CANVAS INTERACTIVE GRAPHIC ───
+        const initCanvasBg = () => {
+            const canvas = document.getElementById('stats-bg-canvas');
+            const section = document.querySelector('.stats-split-section');
+            if (!canvas || !section) return;
+
+            const ctx = canvas.getContext('2d');
+            let width = canvas.width = section.clientWidth;
+            let height = canvas.height = section.clientHeight;
+
+            // Resize listener
+            window.addEventListener('resize', () => {
+                width = canvas.width = section.clientWidth;
+                height = canvas.height = section.clientHeight;
+            }, { passive: true });
+
+            // Particle class
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.r = Math.random() * 2 + 1; // radius 1-3px
+                    this.baseVx = (Math.random() - 0.5) * 0.45; // slow drift
+                    this.baseVy = (Math.random() - 0.5) * 0.45;
+                    this.vx = this.baseVx;
+                    this.vy = this.baseVy;
+                    // Colors: brand purple (126, 55, 249), lavender (168, 85, 247), or white-blue (238, 242, 247)
+                    const rand = Math.random();
+                    this.color = rand > 0.65 ? '126, 55, 249' : (rand > 0.3 ? '168, 85, 247' : '238, 242, 247');
+                    this.alpha = Math.random() * 0.5 + 0.2;
+                    this.pulseSpeed = Math.random() * 0.015 + 0.005;
+                    this.pulseDir = 1;
+                }
+
+                update(scrollSpeed) {
+                    // Temporarily boost speed with scroll movement
+                    this.vx = this.baseVx + (Math.random() - 0.5) * scrollSpeed * 0.12;
+                    this.vy = this.baseVy + (Math.random() - 0.5) * scrollSpeed * 0.12;
+
+                    this.x += this.vx;
+                    this.y += this.vy;
+
+                    // Wrap boundaries
+                    if (this.x < 0) this.x = width;
+                    if (this.x > width) this.x = 0;
+                    if (this.y < 0) this.y = height;
+                    if (this.y > height) this.y = 0;
+
+                    // Fade in/out pulsing
+                    this.alpha += this.pulseSpeed * this.pulseDir;
+                    if (this.alpha > 0.8 || this.alpha < 0.15) {
+                        this.pulseDir *= -1;
+                    }
+                }
+
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(${this.color}, ${this.alpha})`;
+                    ctx.shadowBlur = 8;
+                    ctx.shadowColor = `rgba(${this.color}, 0.4)`;
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                }
+            }
+
+            // Generate particles
+            const particles = [];
+            const particleCount = Math.min(65, Math.floor((width * height) / 16000));
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+
+            // Mouse tracking relative to the section
+            let mouse = { x: null, y: null, active: false };
+            section.addEventListener('mousemove', (e) => {
+                const rect = section.getBoundingClientRect();
+                mouse.x = e.clientX - rect.left;
+                mouse.y = e.clientY - rect.top;
+                mouse.active = true;
+            }, { passive: true });
+
+            section.addEventListener('mouseleave', () => {
+                mouse.active = false;
+            }, { passive: true });
+
+            // Scroll tracking
+            let lastScrollY = window.scrollY;
+            let scrollSpeed = 0;
+            const trackScroll = () => {
+                const currentScrollY = window.scrollY;
+                scrollSpeed = Math.abs(currentScrollY - lastScrollY);
+                lastScrollY = currentScrollY;
+            };
+            window.addEventListener('scroll', trackScroll, { passive: true });
+
+            // Central ambient glow aura
+            const drawCentralGlow = () => {
+                const grad = ctx.createRadialGradient(width / 2, height / 2, 50, width / 2, height / 2, 380);
+                grad.addColorStop(0, 'rgba(126, 55, 249, 0.09)');
+                grad.addColorStop(0.5, 'rgba(168, 85, 247, 0.03)');
+                grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.arc(width / 2, height / 2, 380, 0, Math.PI * 2);
+                ctx.fill();
+            };
+
+            // Main loop
+            const render = () => {
+                ctx.clearRect(0, 0, width, height);
+
+                // Glow background
+                drawCentralGlow();
+
+                // Friction for scroll boost decay
+                scrollSpeed *= 0.94;
+
+                // Update and draw particles
+                particles.forEach(p => {
+                    p.update(scrollSpeed);
+                    p.draw();
+                });
+
+                // Draw constellation web lines
+                ctx.lineWidth = 0.55;
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+
+                        if (dist < 125) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            const alpha = (1 - dist / 125) * 0.16;
+                            ctx.strokeStyle = `rgba(168, 85, 247, ${alpha})`;
+                            ctx.stroke();
+                        }
+                    }
+
+                    // Draw mouse responsive lines
+                    if (mouse.active && mouse.x !== null) {
+                        const dx = particles[i].x - mouse.x;
+                        const dy = particles[i].y - mouse.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+
+                        if (dist < 180) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(mouse.x, mouse.y);
+                            const alpha = (1 - dist / 180) * 0.22;
+                            ctx.strokeStyle = `rgba(126, 55, 249, ${alpha})`;
+                            ctx.lineWidth = 0.75;
+                            ctx.stroke();
+                            ctx.lineWidth = 0.55; // restore
+                        }
+                    }
+                }
+
+                requestAnimationFrame(render);
+            };
+
+            render();
+        };
+        initCanvasBg();
+
+        // ─── SCROLL REVEAL ──────────────────
+        const revealObs = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('vis');
+                    revealObs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+            revealObs.observe(el);
+        });
+
+        // ─── ANIMATE COUNT HELPER ──────────────────
+        const animateCount = (el) => {
+            const target = parseFloat(el.dataset.target);
+            const isDecimal = target % 1 !== 0;
+            const duration = 1600;
+            const start = performance.now();
+
+            if (el.dataset.animId) {
+                cancelAnimationFrame(parseInt(el.dataset.animId));
+            }
+
+            const tick = (now) => {
+                const p = Math.min((now - start) / duration, 1);
+                const eased = p === 1 ? 1 : 1 - Math.pow(2, -12 * p);
+                const val = eased * target;
+
+                if (isDecimal) {
+                    el.textContent = val.toFixed(1);
+                } else if (target >= 100) {
+                    el.textContent = Math.floor(val).toLocaleString();
+                } else {
+                    el.textContent = Math.floor(val);
+                }
+
+                if (p < 1) {
+                    el.dataset.animId = requestAnimationFrame(tick).toString();
+                }
+            };
+
+            el.dataset.animId = requestAnimationFrame(tick).toString();
+        };
+
+        // ─── COUNT UP ON ENTRY ──────────────────────
+        const countObs = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    animateCount(el);
+                    countObs.unobserve(el);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('[data-target]').forEach(el => countObs.observe(el));
+
+        // ─── STATS TICKER CAROUSEL ──────────────────
+        const initStatsTicker = () => {
+            const container = document.querySelector('.stats-ticker-container');
+            const track = document.querySelector('.stats-ticker-track');
+            const cards = document.querySelectorAll('.stats-ticker-card');
+            if (!container || !track || cards.length === 0) return;
+
+            const cardCount = 4; // Number of unique cards per set
+            let activeIndex = 4; // Start at Set 2 to enable seamless wrapping in both directions
+            let isTransitioning = false;
+            let timer = null;
+
+            const getDimensions = () => {
+                const width = window.innerWidth;
+                if (width <= 768) {
+                    return { cardWidth: 260, cardGap: 16 };
+                } else {
+                    return { cardWidth: 320, cardGap: 24 };
+                }
+            };
+
+            const updateCarousel = (smooth = true) => {
+                const { cardWidth, cardGap } = getDimensions();
+
+                if (smooth) {
+                    track.style.transition = 'transform 0.8s cubic-bezier(0.85, 0, 0.15, 1)';
+                } else {
+                    track.style.transition = 'none';
+                }
+
+                // Centering math: 50vw - (cardWidth / 2) - activeIndex * (cardWidth + cardGap)
+                const offset = `calc(50vw - (${cardWidth}px / 2) - ${activeIndex} * (${cardWidth}px + ${cardGap}px))`;
+                track.style.transform = `translateX(${offset})`;
+
+                // Highlight active card
+                cards.forEach((card, idx) => {
+                    if (idx === activeIndex) {
+                        card.classList.add('active');
+                    } else {
+                        card.classList.remove('active');
+                    }
+                });
+            };
+
+            const slideNext = () => {
+                if (isTransitioning) return;
+                isTransitioning = true;
+                activeIndex++;
+                updateCarousel(true);
+
+                setTimeout(() => {
+                    isTransitioning = false;
+                    // Seamlessly jump from Set 3 version (index 8) to Set 2 version (index 4) instantly
+                    if (activeIndex === 8) {
+                        activeIndex = 4;
+                        updateCarousel(false);
+                    }
+                }, 800); // transition duration is 0.8s (800ms)
+            };
+
+            const startAutoPlay = () => {
+                if (timer) clearInterval(timer);
+                timer = setInterval(slideNext, 2200);
+            };
+
+            const stopAutoPlay = () => {
+                if (timer) clearInterval(timer);
+            };
+
+            // Autoplay toggle on hover
+            container.addEventListener('mouseenter', stopAutoPlay);
+            container.addEventListener('mouseleave', startAutoPlay);
+
+            // Initial alignment
+            updateCarousel(false);
+            startAutoPlay();
+
+            // Resize alignment
+            window.addEventListener('resize', () => {
+                updateCarousel(false);
+            }, { passive: true });
+        };
+        initStatsTicker();
+
+        // ─── EDITORIAL SCROLLTELLING HIGHLIGHT ───
+        const initEditorialScrollHighlight = () => {
+            const section = document.getElementById('editorial-section');
+            const sentences = document.querySelectorAll('.scroll-sentence');
+            if (!section || sentences.length === 0) return;
+
+            const handleHighlight = () => {
+                const rect = section.getBoundingClientRect();
+                const viewportHeight = window.innerHeight;
+
+                // Pinned scroll range: total section height minus 1 viewport height
+                const totalScrollHeight = rect.height - viewportHeight;
+                if (totalScrollHeight <= 0) return;
+
+                // progress goes from 0 (start pinning) to 1 (end pinning)
+                let progress = -rect.top / totalScrollHeight;
+                progress = Math.max(0, Math.min(1, progress));
+
+                // Snapping segments: divide by (numSentences + 1) so that the final 
+                // scroll range turns all sentences grey before unpinning
+                const numSentences = sentences.length;
+                const activeIndex = Math.floor(progress * (numSentences + 1));
+
+                sentences.forEach((span, idx) => {
+                    if (idx === activeIndex) {
+                        span.classList.add('active');
+                    } else {
+                        span.classList.remove('active');
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', handleHighlight, { passive: true });
+            window.addEventListener('resize', handleHighlight, { passive: true });
+            handleHighlight(); // Initial trigger
+        };
+        initEditorialScrollHighlight();
+
+        // --- CTA SECTION MOUSE INTERACTION ---
+        const initCTAMouseInteraction = () => {
+            const ctaSection = document.querySelector('.cta-glow-section');
+            const g1 = document.querySelector('.cta-ambient-glow.g1');
+            const g2 = document.querySelector('.cta-ambient-glow.g2');
+            if (!ctaSection) return;
+
+            ctaSection.addEventListener('mousemove', (e) => {
+                const rect = ctaSection.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                // Update CSS variables for spotlight and grid lighting
+                ctaSection.style.setProperty('--mouse-x', `${x}px`);
+                ctaSection.style.setProperty('--mouse-y', `${y}px`);
+
+                // Parallax offset for background glows (smooth, organic shifting)
+                const shiftX = (x - rect.width / 2) * 0.15;
+                const shiftY = (y - rect.height / 2) * 0.15;
+
+                if (g1) g1.style.transform = `translate(${shiftX}px, ${shiftY}px)`;
+                if (g2) g2.style.transform = `translate(${-shiftX}px, ${-shiftY}px)`;
+            });
+
+            // Smooth reset when mouse leaves
+            ctaSection.addEventListener('mouseleave', () => {
+                if (g1) g1.style.transform = 'translate(0px, 0px)';
+                if (g2) g2.style.transform = 'translate(0px, 0px)';
+                ctaSection.style.removeProperty('--mouse-x');
+                ctaSection.style.removeProperty('--mouse-y');
+            });
+        };
+        initCTAMouseInteraction();
+
+
+    </script>
+    <script src="transition.js"></script>
+</body>
+
+</html>

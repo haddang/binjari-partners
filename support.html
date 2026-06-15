@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고객지원 — 빈자리 파트너즈</title>
+    <meta name="description" content="매장의 빈자리를 채우는 가장 스마트한 방법. 빈자리 파트너즈.">
+    <link rel="icon" href="favicon.ico?v=1" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .faq-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 40px auto 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .faq-item {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--gray-1);
+            border-radius: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-header {
+            padding: 30px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer !important;
+            user-select: none;
+        }
+
+        .faq-question {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--black);
+        }
+
+        .faq-icon {
+            font-size: 12px;
+            color: var(--black);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .faq-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.4s ease;
+            padding: 0;
+        }
+
+        .faq-answer {
+            font-size: 15px;
+            color: var(--gray-4);
+            line-height: 1.8;
+            padding-bottom: 30px;
+            padding-left: 48px;
+        }
+
+        /* Active FAQ style */
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-item.active .faq-body {
+            max-height: 250px;
+        }
+
+        /* Contact Details Layout */
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 60px;
+            width: 100%;
+        }
+
+        .info-side {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .info-block {
+            border-top: 1px solid var(--gray-1);
+            padding-top: 24px;
+        }
+
+        .info-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gray-3);
+            margin-bottom: 12px;
+        }
+
+        .info-value {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--black);
+            line-height: 1.4;
+        }
+
+        .info-subtext {
+            font-size: 12px;
+            color: var(--gray-4);
+            margin-top: 6px;
+        }
+
+        /* Success screen on submit */
+        .submit-success-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--white);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .submit-success-overlay.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Page Transition Overlay -->
+    <div class="page-transition-overlay show-title" id="pageTransitionOverlay">
+        <div class="transition-title">SUPPORT</div>
+    </div>
+
+    <!-- Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <!-- NAV -->
+    <nav>
+        <a href="index.html" class="nav-brand">
+            <img src="logo.png" alt="Binjari" class="nav-logo">
+        </a>
+        <div class="nav-links">
+            <a href="about.html">소개</a>
+            <a href="features.html">기능</a>
+            <a href="testimonials.html">후기</a>
+            <a href="support.html" class="active">지원</a>
+        </div>
+        <div class="nav-action">
+            <a href="login.html">Login →</a>
+        </div>
+    </nav>
+
+    <!-- ══════════════════════════════════════════
+         01 — HERO
+    ══════════════════════════════════════════ -->
+    <section class="hero-sub" id="hero">
+        <div class="hero-number">04 / SUPPORT</div>
+        <h1 class="hero-title">쉽고 빠른 파트너 지원</h1>
+        <p class="hero-desc">도입 상담부터 원격 제어 하드웨어 가이드까지 원스톱으로 신속하게 도와드립니다.</p>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         02 — FAQ (Editorial Accordion)
+    ══════════════════════════════════════════ -->
+    <section class="editorial reveal" style="padding-bottom: 80px;">
+        <div class="editorial-label">FAQ</div>
+        <h2 class="editorial-heading">
+            자주 묻는 <span class="serif-italic">질문</span>
+        </h2>
+    </section>
+
+    <section class="three-col" style="padding: 0 var(--page-margin) 240px;">
+        <div class="col-item reveal" style="grid-column: span 12; border-top: none; padding-top: 0;">
+            <div class="faq-container">
+                <!-- FAQ Item 01 -->
+                <div class="faq-item">
+                    <div class="faq-header">
+                        <div style="display: flex; gap: 24px; align-items: center;">
+                            <span
+                                style="font-family: var(--mono); font-size: 13px; color: var(--accent); font-weight: 700;">01</span>
+                            <span class="faq-question">스마트 콘센트 설치 과정이 복잡한가요?</span>
+                        </div>
+                        <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                    </div>
+                    <div class="faq-body">
+                        <div class="faq-answer">
+                            기존 벽면 콘센트에 스마트 플러그를 꽂기만 하면 무선 대시보드에 자동 등록되는 플러그 앤 플레이 방식입니다. 도입 시 전담 매니저가 매장을 직접 방문하여 상세 가이드를 제공합니다.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 02 -->
+                <div class="faq-item">
+                    <div class="faq-header">
+                        <div style="display: flex; gap: 24px; align-items: center;">
+                            <span
+                                style="font-family: var(--mono); font-size: 13px; color: var(--accent); font-weight: 700;">02</span>
+                            <span class="faq-question">월 이용료와 기기 대여 비용은 어떻게 산정되나요?</span>
+                        </div>
+                        <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                    </div>
+                    <div class="faq-body">
+                        <div class="faq-answer">
+                            매장 좌석 규모에 따라 요금제가 세분화됩니다. 첫 30일은 서비스 무료 체험이 가능하며, 구독 시 대기전력 자동 제어 콘센트 대여 비용이 포함됩니다.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 03 -->
+                <div class="faq-item">
+                    <div class="faq-header">
+                        <div style="display: flex; gap: 24px; align-items: center;">
+                            <span
+                                style="font-family: var(--mono); font-size: 13px; color: var(--accent); font-weight: 700;">03</span>
+                            <span class="faq-question">기존에 사용 중인 무인 키오스크와 통합 연동이 가능한가요?</span>
+                        </div>
+                        <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                    </div>
+                    <div class="faq-body">
+                        <div class="faq-answer">
+                            주요 무인 키오스크 제품들과 API 및 하드웨어 연동을 통한 실시간 동기화를 지원합니다. 추가 조율이 필요한 경우 당사 지원 부서에서 신속히 연동을 도와드립니다.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 04 -->
+                <div class="faq-item">
+                    <div class="faq-header">
+                        <div style="display: flex; gap: 24px; align-items: center;">
+                            <span
+                                style="font-family: var(--mono); font-size: 13px; color: var(--accent); font-weight: 700;">04</span>
+                            <span class="faq-question">인터넷이나 Wi-Fi가 일시적으로 끊기면 제어가 불가능해지나요?</span>
+                        </div>
+                        <span class="faq-icon"><i class="fa-solid fa-chevron-down"></i></span>
+                    </div>
+                    <div class="faq-body">
+                        <div class="faq-answer">
+                            인터넷이 끊겨도 스마트 게이트웨이의 자체 로컬 메모리를 기반으로 정상 작동합니다. 통신 복구 즉시 미전송 전력 데이터가 대시보드로 자동 업로드됩니다.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         03 — CONTACT FORM (Luxury Editorial Application)
+    ══════════════════════════════════════════ -->
+    <section class="editorial reveal"
+        style="padding-bottom: 80px; border-top: 1px solid var(--gray-1); padding-top: 180px;">
+        <div class="editorial-label">Inquiry</div>
+        <h2 class="editorial-heading">
+            제휴 신청 및 <span class="serif-italic">도입 문의</span>
+        </h2>
+    </section>
+
+    <section class="three-col" style="padding: 0 var(--page-margin) 240px;">
+        <div class="col-item reveal" style="grid-column: span 12; border-top: none; padding-top: 0;">
+            <div class="contact-layout">
+                <!-- Info cards side -->
+                <div class="info-side">
+                    <div class="info-block">
+                        <div class="info-label">PARTNER HELPLINE</div>
+                        <div class="info-value">1588-3456</div>
+                        <div class="info-subtext">평일 오전 9시 - 오후 6시 (주말 및 공휴일 제외)</div>
+                    </div>
+                    <div class="info-block">
+                        <div class="info-label">COOPERATION EMAIL</div>
+                        <div class="info-value">support@binjari.com</div>
+                        <div class="info-subtext">제휴 제안 및 기업 서버 통합 솔루션 연동 문의</div>
+                    </div>
+                    <div class="info-block">
+                        <div class="info-label">LAB LOCATION</div>
+                        <div class="info-value">서울특별시 마포구 백범로 31길 21</div>
+                        <div class="info-subtext">서울창업허브 본관 4층 빈자리 파트너즈 랩</div>
+                    </div>
+                </div>
+
+                <!-- Inquiry Form side -->
+                <div class="editorial-card" style="position: relative; border-color: var(--gray-1); background: #ffffff; box-shadow: 0 20px 40px rgba(15, 23, 42, 0.04); padding: 50px;">
+                    <!-- Success Overlay -->
+                    <div class="submit-success-overlay" id="success-overlay">
+                        <div style="font-size: 48px; color: var(--accent); margin-bottom: 25px;"><i
+                                class="fa-solid fa-circle-check"></i></div>
+                        <h3 style="font-size: 24px; font-weight: 900; margin-bottom: 12px; color: var(--black);">
+                            문의 신청 완료.
+                        </h3>
+                        <p
+                            style="color: var(--gray-4); font-size: 14.5px; line-height: 1.6; max-width: 320px; margin: 0 auto 25px auto;">
+                            보내주신 내용이 기록되었습니다. 전담 매니저가 24시간 이내에 안내해 드리겠습니다.
+                        </p>
+                        <button class="editorial-btn" id="close-success-btn" style="padding: 12px 30px;">새 문의하기</button>
+                    </div>
+
+                    <form id="support-form" onsubmit="handleFormSubmit(event)">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+                            <div class="editorial-form-group">
+                                <label for="user-name">NAME (성함)</label>
+                                <input type="text" id="user-name" class="editorial-input" required placeholder="Name">
+                            </div>
+                            <div class="editorial-form-group">
+                                <label for="cafe-name">STORE NAME (매장명)</label>
+                                <input type="text" id="cafe-name" class="editorial-input" required placeholder="Store">
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+                            <div class="editorial-form-group">
+                                <label for="user-phone">PHONE (연락처)</label>
+                                <input type="tel" id="user-phone" class="editorial-input" required
+                                    placeholder="010-0000-0000">
+                            </div>
+                            <div class="editorial-form-group">
+                                <label for="user-email">EMAIL (이메일)</label>
+                                <input type="email" id="user-email" class="editorial-input" required
+                                    placeholder="email@address.com">
+                            </div>
+                        </div>
+
+                        <div class="editorial-form-group" style="margin-bottom: 30px;">
+                            <label for="inquiry-type">CATEGORY (문의 항목)</label>
+                            <select id="inquiry-type" class="editorial-input"
+                                style="appearance: none; background: transparent; cursor: pointer;">
+                                <option value="onboarding">서비스 신규 도입 신청</option>
+                                <option value="tech">스마트 플러그 및 기기 연동 장애</option>
+                                <option value="billing">멤버십 요금제 및 결제 문의</option>
+                                <option value="partnership">비즈니스 제휴 제안</option>
+                            </select>
+                        </div>
+
+                        <div class="editorial-form-group" style="margin-bottom: 40px;">
+                            <label for="message">MESSAGE (상세 내용)</label>
+                            <textarea id="message" rows="4" class="editorial-input" style="resize: none;" required
+                                placeholder="매장 규모(좌석 수 등)와 구체적인 문의 내용을 자유롭게 적어주세요."></textarea>
+                        </div>
+
+                        <button type="submit" class="editorial-btn fill-accent" style="width: 100%;">APPLY NOW
+                            →</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         04 — CTA (Support Quick Help Card)
+    ══════════════════════════════════════════ -->
+    <section class="cta-section cta-support-help">
+        <div class="cta-eyebrow reveal">Fast Helpline</div>
+        <h2 class="cta-bigtype reveal">더 빠른 상담이 필요하신가요?</h2>
+        <p class="cta-sub reveal" style="margin: 0;">글로 문의를 작성하기 번거로우시다면 실시간 카카오톡 채널 상담을 이용해 보세요.</p>
+        <div class="help-grid reveal">
+            <div class="help-card">
+                <h3>실시간 카카오톡 채널 상담</h3>
+                <p>카카오톡에서 '빈자리 파트너즈'를 검색해 추가하시면 매니저와 1:1 채팅을 통해 막힘없이 실시간 문답을 나누실 수 있습니다.</p>
+            </div>
+            <div class="help-card">
+                <h3>대표 전화 및 기술 지원</h3>
+                <p>스마트 기기 사용법이나 무선 연결 장애로 영업에 지장이 생기신 경우, 대표 전화(1588-3456)로 전화주시면 바로 친절하게 안내해 드립니다.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         FOOTER
+    ══════════════════════════════════════════ -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <img src="logo.png" alt="Binjari" class="footer-logo">
+                <p>매장의 빈자리를 채우는 가장 스마트한 방법. 실시간 관제, 통합 예약, 데이터 인사이트.</p>
+            </div>
+            <div class="footer-links">
+                <div class="f-col-title">Service</div>
+                <ul class="f-col-list">
+                    <li><a href="about.html">서비스 소개</a></li>
+                    <li><a href="features.html">주요 기능</a></li>
+                    <li><a href="testimonials.html">파트너 후기</a></li>
+                </ul>
+            </div>
+            <div class="footer-links-2">
+                <div class="f-col-title">Support</div>
+                <ul class="f-col-list">
+                    <li><a href="support.html">FAQ</a></li>
+                    <li><a href="support.html">문의하기</a></li>
+                    <li><a href="#">이용약관</a></li>
+                </ul>
+            </div>
+            <div class="footer-links-3">
+                <div class="f-col-title">Partners</div>
+                <ul class="f-col-list">
+                    <li><a href="login.html">로그인</a></li>
+                    <li><a href="dashboard.html">대시보드</a></li>
+                    <li><a href="#">API Docs</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Binjari Partners</span>
+        </div>
+    </footer>
+
+    <!-- ══════════════════════════════════════════
+         SCRIPTS
+    ══════════════════════════════════════════ -->
+    <script>
+        // Custom Cursor Setup
+        const dot = document.querySelector('.cursor-dot');
+        const ring = document.querySelector('.cursor-ring');
+        if (dot && ring) {
+            document.body.classList.add('custom-cursor-ready');
+            let mx = 0, my = 0, rx = 0, ry = 0;
+
+            window.addEventListener('mousemove', e => {
+                mx = e.clientX;
+                my = e.clientY;
+                document.body.classList.add('cursor-active');
+            });
+
+            document.addEventListener('mouseleave', () => {
+                document.body.classList.remove('cursor-active');
+            });
+
+            const loop = () => {
+                dot.style.transform = `translate3d(${mx}px,${my}px,0) translate(-50%,-50%)`;
+                rx += (mx - rx) * 0.1;
+                ry += (my - ry) * 0.1;
+                ring.style.transform = `translate3d(${rx}px,${ry}px,0) translate(-50%,-50%)`;
+                requestAnimationFrame(loop);
+            };
+            loop();
+
+            document.querySelectorAll('a, button, .faq-header, input, select, textarea').forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+            });
+        }
+
+        // Magnetic Hover Effect
+        const applyMagnetic = (elements) => {
+            elements.forEach(el => {
+                el.addEventListener('mousemove', function (e) {
+                    const position = el.getBoundingClientRect();
+                    const x = e.clientX - position.left - position.width / 2;
+                    const y = e.clientY - position.top - position.height / 2;
+
+                    el.style.transition = 'none';
+                    el.style.transform = `translate(${x * 0.15}px, ${y * 0.25}px)`;
+                });
+
+                el.addEventListener('mouseout', function (e) {
+                    el.style.transition = 'transform 0.5s cubic-bezier(.25,1,.5,1)';
+                    el.style.transform = 'translate(0px, 0px)';
+                });
+            });
+        };
+        applyMagnetic(document.querySelectorAll('.nav-brand, .nav-links a, .nav-action a, .btn-primary-gradient, .btn-secondary-dark, .btn-big'));
+
+        // NAV SCROLL STATE
+        const nav = document.querySelector('nav');
+        if (nav) {
+            const updateNavState = () => {
+                nav.classList.toggle('nav-scrolled', window.scrollY > 12);
+            };
+            updateNavState();
+            window.addEventListener('scroll', updateNavState, { passive: true });
+        }
+
+        // SCROLL REVEAL
+        const revealObs = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('vis');
+                    revealObs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            revealObs.observe(el);
+        });
+
+        // --- INTERACTIVE FAQ ACCORDION LOGIC ---
+        const faqHeaders = document.querySelectorAll('.faq-header');
+        faqHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const isActive = item.classList.contains('active');
+
+                document.querySelectorAll('.faq-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // --- INTERACTIVE INQUIRY FORM SUBMIT ---
+        const supportForm = document.getElementById('support-form');
+        const successOverlay = document.getElementById('success-overlay');
+        const closeSuccessBtn = document.getElementById('close-success-btn');
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            successOverlay.classList.add('visible');
+        }
+
+        closeSuccessBtn.addEventListener('click', () => {
+            supportForm.reset();
+            successOverlay.classList.remove('visible');
+        });
+    </script>
+    <script src="transition.js"></script>
+</body>
+
+</html>

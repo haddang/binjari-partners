@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 — 빈자리 파트너즈</title>
+    <meta name="description" content="매장의 빈자리를 채우는 가장 스마트한 방법. 빈자리 파트너즈.">
+    <link rel="icon" href="favicon.ico?v=1" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body,
+        html {
+            height: 100%;
+            font-family: var(--sans);
+            color: #1e293b;
+            /* Slate 800 */
+            overflow: hidden;
+            background: #f8fafc;
+            /* Very light slate gray */
+        }
+
+        /* Floating background blobs */
+        .bg-blobs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.55;
+            animation: floatBlob 15s infinite alternate ease-in-out;
+        }
+
+        .blob-1 {
+            width: 480px;
+            height: 480px;
+            top: -10%;
+            left: -10%;
+            background: radial-gradient(circle, rgba(126, 55, 249, 0.35) 0%, transparent 80%);
+        }
+
+        .blob-2 {
+            width: 520px;
+            height: 520px;
+            bottom: -15%;
+            right: -10%;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, transparent 80%);
+            animation-delay: -5s;
+            animation-duration: 20s;
+        }
+
+        @keyframes floatBlob {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate(60px, 80px) scale(1.08);
+            }
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 30px var(--page-margin);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .logo {
+            height: 28px;
+        }
+
+        .back-link {
+            color: #475569;
+            /* Slate 600 */
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        .login-container {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Glassmorphic card design (Compacted padding & max-width) */
+        .login-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.65);
+            border-radius: 24px;
+            padding: 36px 40px;
+            /* Reduced from 48px */
+            width: 100%;
+            max-width: 420px;
+            /* Reduced from 440px */
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.05);
+            animation: cardEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes cardEnter {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Input Form styling (Reduced gap & margins) */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 16px;
+            /* Reduced from 20px */
+        }
+
+        .form-group label {
+            font-family: var(--sans);
+            font-size: 11px;
+            font-weight: 700;
+            color: #64748b;
+            /* Slate 500 */
+            letter-spacing: 0.5px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 14px;
+            /* Slightly compacted padding */
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            /* Slate 200 */
+            border-radius: 10px;
+            font-family: var(--sans);
+            font-size: 14px;
+            color: #0f172a;
+            /* Slate 900 */
+            outline: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .form-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(126, 55, 249, 0.08);
+            background: #ffffff;
+        }
+
+        .form-input::placeholder {
+            color: #94a3b8;
+            /* Slate 400 */
+        }
+
+        /* Checkbox & Forgot Reset Links */
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            /* Reduced from 30px */
+            font-family: var(--sans);
+            font-size: 13px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            color: #475569;
+            /* Slate 600 */
+            font-weight: 500;
+            user-select: none;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 1.5px solid #cbd5e1;
+            /* Slate 300 */
+            border-radius: 6px;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+            background: #ffffff;
+        }
+
+        .checkbox-label input[type="checkbox"]:checked {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .checkbox-label input[type="checkbox"]:checked::after {
+            content: "\f00c";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 10px;
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .forgot-link {
+            color: #64748b;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .forgot-link:hover {
+            color: var(--accent);
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 13px;
+            background: var(--accent);
+            border: none;
+            color: white;
+            font-family: var(--sans);
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 12px rgba(126, 55, 249, 0.15);
+        }
+
+        .submit-btn:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(126, 55, 249, 0.25);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Social Divider (Reduced margin) */
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 16px 0;
+            /* Reduced from 24px */
+            color: #94a3b8;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .divider:not(:empty)::before {
+            margin-right: 16px;
+        }
+
+        .divider:not(:empty)::after {
+            margin-left: 16px;
+        }
+
+        /* Circular SNS Login Buttons in a horizontal row */
+        .social-login-group {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 4px;
+        }
+
+        .social-circle-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            border: none;
+            outline: none;
+        }
+
+        .btn-kakao {
+            background: #FEE500;
+            color: #191919;
+        }
+
+        .btn-kakao:hover {
+            background: #FADA0A;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(254, 229, 0, 0.3);
+        }
+
+        .btn-naver {
+            background: #03C75A;
+            color: #ffffff;
+        }
+
+        .btn-naver:hover {
+            background: #02b650;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(3, 199, 90, 0.25);
+        }
+
+        .btn-google {
+            background: #ffffff;
+            color: #191919;
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn-google:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+        }
+
+        /* Korean Menu Links footer */
+        .utility-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-top: 24px;
+            /* Reduced from 32px */
+            font-family: var(--sans);
+            font-size: 12.5px;
+            color: #64748b;
+        }
+
+        .utility-links a {
+            color: #64748b;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .utility-links a:hover {
+            color: var(--accent);
+        }
+
+        .utility-divider {
+            color: #cbd5e1;
+            font-size: 10px;
+        }
+
+        /* Success Overlay */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .login-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .overlay-content {
+            text-align: center;
+            color: #0f172a;
+        }
+
+        .overlay-content i {
+            font-size: 56px;
+            color: var(--accent);
+            margin-bottom: 24px;
+            animation: pulseCheck 1s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulseCheck {
+            from {
+                transform: scale(1);
+            }
+
+            to {
+                transform: scale(1.08);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Page Transition Overlay -->
+    <div class="page-transition-overlay show-title horizontal" id="pageTransitionOverlay">
+        <div class="transition-title">LOGIN</div>
+    </div>
+
+    <!-- Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <!-- Floating Background Blobs -->
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <header>
+        <a href="index.html" class="logo-link"><img src="logo.png" alt="BINJARI Logo" class="logo"></a>
+        <a href="index.html" class="back-link">
+            <i class="fa-solid fa-arrow-left"></i> BACK TO HOME
+        </a>
+    </header>
+
+    <main class="login-container">
+        <div class="login-card">
+            <div style="text-align: left; margin-bottom: 56px;">
+                <h1 style="font-size: 30px; font-weight: 900; letter-spacing: -1.5px; color: var(--accent); margin: 0;">
+                    로그인</h1>
+            </div>
+
+            <form action="dashboard.html" id="loginForm">
+                <div class="form-group">
+                    <label for="email">이메일 주소</label>
+                    <input type="email" id="email" class="form-input" placeholder="partner@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">비밀번호</label>
+                    <input type="password" id="password" class="form-input" placeholder="비밀번호를 입력하세요" required>
+                </div>
+
+                <div class="form-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox">
+                        로그인 상태 유지
+                    </label>
+                    <a href="#" class="forgot-link">비밀번호 찾기</a>
+                </div>
+
+                <button type="submit" class="submit-btn">로그인</button>
+            </form>
+
+            <div class="divider">또는 간편 로그인</div>
+
+            <!-- Redesigned as a compact horizontal row of circular icons -->
+            <div class="social-login-group">
+                <button class="social-circle-btn btn-kakao sns-btn" aria-label="카카오 로그인">
+                    <i class="fa-solid fa-comment"></i>
+                </button>
+                <button class="social-circle-btn btn-naver sns-btn" aria-label="네이버 로그인">
+                    <span style="font-family: 'Inter', sans-serif; font-weight: 900; font-size: 15px;">N</span>
+                </button>
+                <button class="social-circle-btn btn-google sns-btn" aria-label="구글 로그인">
+                    <i class="fa-brands fa-google"></i>
+                </button>
+            </div>
+
+            <div class="utility-links">
+                <a href="#">회원가입</a>
+                <span class="utility-divider">|</span>
+                <a href="#">이메일 찾기</a>
+                <span class="utility-divider">|</span>
+                <a href="#">비밀번호 재설정</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- 로그인 성공 오버레이 -->
+    <div id="loginOverlay" class="login-overlay">
+        <div class="overlay-content">
+            <i class="fa-solid fa-circle-check"></i>
+            <h2 style="font-size: 26px; font-weight: 900; margin-bottom: 8px; color: #0f172a;">로그인 완료</h2>
+            <p style="font-family: var(--sans); font-size: 13px; font-weight: 500; color: #64748b;">대시보드로 이동하고 있습니다...
+            </p>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         SCRIPTS
+    ══════════════════════════════════════════ -->
+    <script>
+        // Custom Cursor Setup
+        const dot = document.querySelector('.cursor-dot');
+        const ring = document.querySelector('.cursor-ring');
+        if (dot && ring) {
+            document.body.classList.add('custom-cursor-ready');
+            let mx = 0, my = 0, rx = 0, ry = 0;
+
+            window.addEventListener('mousemove', e => {
+                mx = e.clientX;
+                my = e.clientY;
+                document.body.classList.add('cursor-active');
+            });
+
+            document.addEventListener('mouseleave', () => {
+                document.body.classList.remove('cursor-active');
+            });
+
+            const loop = () => {
+                dot.style.transform = `translate3d(${mx}px,${my}px,0) translate(-50%,-50%)`;
+                rx += (mx - rx) * 0.1;
+                ry += (my - ry) * 0.1;
+                ring.style.transform = `translate3d(${rx}px,${ry}px,0) translate(-50%,-50%)`;
+                requestAnimationFrame(loop);
+            };
+            loop();
+
+            document.querySelectorAll('a, button, input[type="checkbox"], label, input').forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+            });
+        }
+
+        // Magnetic Hover Effect
+        const applyMagnetic = (elements) => {
+            elements.forEach(el => {
+                el.addEventListener('mousemove', function(e) {
+                    const position = el.getBoundingClientRect();
+                    const x = e.clientX - position.left - position.width / 2;
+                    const y = e.clientY - position.top - position.height / 2;
+
+                    el.style.transition = 'none';
+                    el.style.transform = `translate(${x * 0.15}px, ${y * 0.25}px)`;
+                });
+
+                el.addEventListener('mouseout', function(e) {
+                    el.style.transition = 'transform 0.5s cubic-bezier(.25,1,.5,1)';
+                    el.style.transform = 'translate(0px, 0px)';
+                });
+            });
+        };
+        applyMagnetic(document.querySelectorAll('.logo-link, .back-link, .submit-btn, .sns-btn'));
+
+        // Form Submit Handler
+        const loginForm = document.getElementById('loginForm');
+        const loginOverlay = document.getElementById('loginOverlay');
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            loginOverlay.classList.add('active');
+            
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1500);
+        });
+    </script>
+    <script src="transition.js"></script>
+</body>
+
+</html>
