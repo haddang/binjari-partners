@@ -10,41 +10,41 @@ document.addEventListener('DOMContentLoaded', () => {
         // Overlay starts visible. Slide it out to the left (translateX: 0 -> -100%)
         overlay.classList.add('horizontal');
         overlay.style.transform = 'translateX(0)';
-        
+
         setTimeout(() => {
             overlay.style.pointerEvents = 'none';
-            overlay.style.transition = 'transform 0.75s cubic-bezier(0.76, 0, 0.24, 1)';
+            overlay.style.transition = 'transform 0.55s cubic-bezier(0.76, 0, 0.24, 1)';
             overlay.style.transform = 'translateX(-100%)';
             overlay.classList.remove('show-title');
-        }, 150);
+        }, 50);
     } else if (transitionType === 'from-login') {
         // We returned to home/marketing page from login.
         // Overlay starts visible. Slide it out to the right (translateX: 0 -> 100%)
         overlay.classList.add('horizontal');
         overlay.style.transform = 'translateX(0)';
-        
+
         setTimeout(() => {
             overlay.style.pointerEvents = 'none';
-            overlay.style.transition = 'transform 0.75s cubic-bezier(0.76, 0, 0.24, 1)';
+            overlay.style.transition = 'transform 0.55s cubic-bezier(0.76, 0, 0.24, 1)';
             overlay.style.transform = 'translateX(100%)';
             overlay.classList.remove('show-title');
-        }, 150);
+        }, 50);
     } else {
         // Standard vertical transition on load (translateY: 0 -> -100%)
         setTimeout(() => {
             overlay.classList.add('fade-out');
             overlay.classList.remove('show-title');
-        }, 150);
+        }, 50);
     }
 
-    // Set display none after transition finishes to optimize page performance (150ms delay + 750ms transition + safety buffer)
+    // Set display none after transition finishes to optimize page performance (50ms delay + 550ms transition + safety buffer)
     setTimeout(() => {
         overlay.style.display = 'none';
-    }, 1200);
+    }, 800);
 
     // Click Interceptor
     const linkSelectors = 'nav:not(.sidebar) a, .logo-link, .back-link';
-    
+
     document.addEventListener('click', (e) => {
         const link = e.target.closest('a');
         if (!link) return;
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!href || href.startsWith('#') || href.startsWith('javascript:')) return;
         if (link.target === '_blank') return;
         if (link.hostname !== window.location.hostname) return;
-        
+
         // Ensure it resolves to a local webpage navigation
         if (!href.endsWith('.html') && href !== '/' && href !== './') return;
 
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
         overlay.style.display = 'flex';
         overlay.style.pointerEvents = 'auto';
         overlay.classList.remove('fade-out', 'show-title');
-        
+
         const titleEl = overlay.querySelector('.transition-title');
         if (titleEl) {
             titleEl.textContent = targetPageTitle;
@@ -93,47 +93,47 @@ document.addEventListener('DOMContentLoaded', () => {
             // Going to login: slide in horizontally from the right (translateX: 100% -> 0)
             sessionStorage.setItem('nextTransitionType', 'to-login');
             overlay.classList.add('horizontal');
-            
+
             overlay.style.transition = 'none';
             overlay.style.transform = 'translateX(100%)';
-            
+
             overlay.offsetHeight; // Reflow
-            
-            overlay.style.transition = 'transform 0.75s cubic-bezier(0.76, 0, 0.24, 1)';
+
+            overlay.style.transition = 'transform 0.55s cubic-bezier(0.76, 0, 0.24, 1)';
             overlay.style.transform = 'translateX(0)';
         } else if (window.location.pathname.includes('login.html')) {
             // Leaving login: slide in horizontally from the left (translateX: -100% -> 0)
             sessionStorage.setItem('nextTransitionType', 'from-login');
             overlay.classList.add('horizontal');
-            
+
             overlay.style.transition = 'none';
             overlay.style.transform = 'translateX(-100%)';
-            
+
             overlay.offsetHeight; // Reflow
-            
-            overlay.style.transition = 'transform 0.75s cubic-bezier(0.76, 0, 0.24, 1)';
+
+            overlay.style.transition = 'transform 0.55s cubic-bezier(0.76, 0, 0.24, 1)';
             overlay.style.transform = 'translateX(0)';
         } else {
             // Standard vertical slide in from bottom (translateY: 100% -> 0)
             overlay.classList.remove('horizontal');
-            
+
             overlay.style.transition = 'none';
             overlay.style.transform = 'translateY(100%)';
-            
+
             overlay.offsetHeight; // Reflow
-            
-            overlay.style.transition = 'transform 0.75s cubic-bezier(0.76, 0, 0.24, 1)';
+
+            overlay.style.transition = 'transform 0.55s cubic-bezier(0.76, 0, 0.24, 1)';
             overlay.style.transform = 'translateY(0)';
         }
 
         // Fade in target title
         setTimeout(() => {
             overlay.classList.add('show-title');
-        }, 150);
+        }, 100);
 
         // Perform actual navigation after transition completes
         setTimeout(() => {
             window.location.href = targetUrl;
-        }, 750);
+        }, 550);
     });
 });
