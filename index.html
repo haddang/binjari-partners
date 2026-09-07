@@ -436,8 +436,8 @@
 
             const loop = () => {
                 dot.style.transform = `translate3d(${mx}px,${my}px,0) translate(-50%,-50%)`;
-                rx += (mx - rx) * 0.1;
-                ry += (my - ry) * 0.1;
+                rx += (mx - rx) * 0.35; // 0.1 -> 0.35 로 반응 속도 3.5배 민첩하게 개선
+                ry += (my - ry) * 0.35;
                 ring.style.transform = `translate3d(${rx}px,${ry}px,0) translate(-50%,-50%)`;
                 requestAnimationFrame(loop);
             };
